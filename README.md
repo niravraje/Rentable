@@ -9,8 +9,8 @@
   <li>Brett McIntyre</li>  
   <li>Luke Tang</li>
 </ul>
-### Client:
-Rohit Singh
+
+### Client: Rohit Singh
 
 
 # System Overview:
