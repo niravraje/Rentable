@@ -1,6 +1,7 @@
 import React, { useState } from "react" 
 import Signup from './signup'
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom"
+import GoogleLogin from 'react-google-login'
 
 const case1 = ({username,password}) =>{
     return new Promise((resolve, reject) =>{
@@ -14,6 +15,10 @@ const case1 = ({username,password}) =>{
     })
 }
 
+const responseGoogle = (response) => {
+    console.log(response)
+    console.log(response.profileObj)
+}
 
 const Signin = () => {
     const[username,setUsername] = useState("")
@@ -56,25 +61,37 @@ const Signin = () => {
                 <h1 className="card-title"></h1>
                 {error && <h1 className="text-danger">{error}</h1>}
                 <form onSubmit={handleSubmit}>
+                
+                <div className="mb-3">
+                    <GoogleLogin
+                        clientId="693247566048-ph5gqf37u78uub3erq5kovg30k0i4rph.apps.googleusercontent.com"
+                        buttonText="Login with Google"
+                        onSuccess={responseGoogle}
+                        onFailure={responseGoogle}
+                        cookiePolicy={'single_host_origin'}
+                    />
+                </div>
+
                 <div className="mb-3">
                     <label htmlFor="exampleInputEmail1" className="form-label">Username</label>
                     <input 
-                    type="text" //can be email
-                    className="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                    value={username}
-                    onChange={(e) => setUsername(e.currentTarget.value)}
+                        type="text" //can be email
+                        className="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                        value={username}
+                        onChange={(e) => setUsername(e.currentTarget.value)}
                     />
                 </div>
+
                 <div className="mb-3">
                     <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
                     <input 
-                    type="password" 
-                    className="form-control" 
-                    id="exampleInputPassword1"
-                    value={password}
-                    onChange={(e) => setPassword(e.currentTarget.value)}
+                        type="password" 
+                        className="form-control" 
+                        id="exampleInputPassword1"
+                        value={password}
+                        onChange={(e) => setPassword(e.currentTarget.value)}
                     />
                 </div>
                 <button 
