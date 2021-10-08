@@ -25,4 +25,7 @@ Rental & Services Management System is a way for customers/people and the manage
   <li>View specific functionalities</li>
   <li>Messaging & Chat</li>
 </ul>
-  
+
+# System Architecture:
+![Rentable System Architecture drawio](https://media.github.iu.edu/user/17947/files/293c2400-27d4-11ec-857f-7c080dc42c89)
+
