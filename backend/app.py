@@ -16,10 +16,11 @@ app = Flask(__name__)
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        email = request.json['email']
-        user_type = request.json['user_type']
-        first_name = request.json['first_name']
-        last_name = request.json['last_name']
+        email = request.json.get('email')
+        user_type = request.json.get('user_type')
+        login_type = request.json.get('login_type')
+        first_name = request.json.get('first_name')
+        last_name = request.json.get('last_name')
         password = request.json['password']
 
         # Generate password hash
@@ -28,7 +29,7 @@ def register():
         # Generate unique username
         username = first_name.lower() + last_name.lower()
         cur = conn.cursor()
-        cur.execute("SELECT count(*) as user_count FROM login")
+        cur.execute("SELECT count(*) AS user_count FROM login")
         result = cur.fetchone()
         user_count = result.get('user_count')
         user_count += 1
@@ -37,9 +38,9 @@ def register():
         # Insert into login table
         cur = conn.cursor()
         query_insert_login = """INSERT INTO 
-        login(email, password) 
-        VALUES(%s, %s)"""
-        cur.execute(query_insert_login, (email, password))
+        login(email, password, login_type) 
+        VALUES(%s, %s, %s)"""
+        cur.execute(query_insert_login, (email, password, login_type))
         conn.commit()
         
         # Insert into user table
