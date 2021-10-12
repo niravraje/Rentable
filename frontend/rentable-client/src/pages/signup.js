@@ -55,9 +55,16 @@ const Signup = () => {
     try {
       console.log(requestOptions);
       const res = await fetch("/register", requestOptions);
+      // .then((res) => res.json())
+      // .then((data) => {
+      //   console.log(data);
+      //   console.log("Registration response token: " + data.access_token);
+      // });
       console.log(res);
-      const data = res.json();
-      console.log("Registration response: ", data);
+      const data = await res.json();
+      console.log("Registration response token: " + data);
+      console.log("Access token received on register: " + data.access_token);
+      sessionStorage.setItem("token", data.access_token);
       // setUsername(username)
       // setPassword(password)
       // setEmail(email)
@@ -72,6 +79,7 @@ const Signup = () => {
       setEmail("");
       setPassword("");
       setConfirmPassword("");
+
       setError(
         "Passwords do not match or your password is less than 9 characters."
       );

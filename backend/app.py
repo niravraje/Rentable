@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_jwt_extended import create_access_token, JWTManager
 import pymysql
 
 conn = pymysql.connect(
@@ -12,6 +13,10 @@ conn = pymysql.connect(
 )
 
 app = Flask(__name__)
+
+# --- JWT Initialization ---
+app.config["JWT_SECRET_KEY"] = "rentable"
+jwt = JWTManager(app)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -50,7 +55,10 @@ def register():
         VALUES(%s, %s, %s, %s, %s)"""
         cur.execute(query_insert_user, (username, user_type, first_name, last_name, email))
         conn.commit()
-        return jsonify({'msg': 'user registered'}), 201
+
+        access_token = create_access_token(identity = email)
+
+        return jsonify(access_token = access_token), 201
     else:
         return jsonify(({'msg': 'HTTP method must be POST'})), 405
 
@@ -74,7 +82,8 @@ def sign_in():
         # Manual login
         if login_type == 'manual':
             if check_password_hash(fetched_password, password):
-                return jsonify({'msg': 'Login success'}), 202
+                access_token = create_access_token(identity = email)
+                return jsonify(access_token = access_token), 202
             else:
                 return jsonify({'msg': 'Login failed'}), 401
 
