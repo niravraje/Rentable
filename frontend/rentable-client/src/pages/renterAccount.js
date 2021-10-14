@@ -1,6 +1,6 @@
 import React from "react";
 
-const RenterHome = () => {
+const RenterAccount = () => {
   return (
     <div
       style={{
@@ -15,4 +15,4 @@ const RenterHome = () => {
   );
 };
 
-export default RenterHome;
+export default RenterAccount;

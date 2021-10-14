@@ -24,7 +24,7 @@ import { FaBorderNone } from "react-icons/fa";
 //     })
 // }
 
-const Signup = () => {
+const Signup = (props) => {
   const [email, setEmail] = useState("");
   const [userType, setUserType] = useState("renter");
   const [loginType, setLoginType] = useState("manual");
@@ -34,7 +34,7 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
+  // const [isLogin, setIsLogin] = useState(false);
 
   const registerUser = async (e) => {
     e.preventDefault();
@@ -70,7 +70,15 @@ const Signup = () => {
       // setEmail(email)
       setError("");
       setIsLoading(false);
-      setIsLogin(true);
+      // setIsLogin(true);
+      console.log(
+        "Signup.js: Before setting login status: " + props.loginStatus
+      );
+      props.handleLogin();
+      console.log(
+        "Signup.js: Before setting login status: " + props.loginStatus
+      );
+
       console.log("success");
       // resolve()
     } catch (error) {
@@ -119,7 +127,7 @@ const Signup = () => {
       className="card container mt-S"
       style={{ marginTop: "100px", width: "500px", border: FaBorderNone }}
     >
-      {isLogin ? (
+      {props.loginStatus ? (
         <>
           {console.log({ firstName })}
           <div className="mb-3" style={{ border: FaBorderNone }}>

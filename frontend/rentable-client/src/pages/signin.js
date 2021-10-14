@@ -19,14 +19,14 @@ const responseGoogle = (response) => {
   console.log(response.profileObj);
 };
 
-const Signin = () => {
+const Signin = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginType, setLoginType] = useState("manual");
 
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
+  //   const [isLogin, setIsLogin] = useState(false);
 
   const loginUser = async (e) => {
     e.preventDefault();
@@ -43,24 +43,27 @@ const Signin = () => {
     try {
       console.log(requestOptions);
       const res = await fetch("/sign_in", requestOptions);
-      console.log(res);
+      console.log("Response on sign_in request: " + res);
       const data = await res.json();
-      const statusCode = res.status;
-      console.log("Status code of login request: " + statusCode);
-      console.log("Registration response token: " + JSON.stringify(data));
+
+      console.log("Status code of login request: " + res.status);
+      console.log("Login request's res.json(): " + JSON.stringify(data));
       console.log("Access token received on login: " + data.access_token);
+
       sessionStorage.setItem("token", data.access_token);
       setError("");
       setIsLoading(false);
-      setIsLogin(true);
+      //   setIsLogin(true);
+      console.log("props.handleLogin: " + props.handleLogin);
+      console.log("Before setting login status: " + props.loginStatus);
+      props.handleLogin();
       console.log("User authenticated successfully");
-    } catch (error) {
+    } catch (err) {
       setEmail("");
       setPassword("");
+      console.log("props.loginStatus value is: " + props.loginStatus);
+      setError("Error. Invalid username/password or internal server error.");
 
-      setError(
-        "Passwords do not match or your password is less than 9 characters."
-      );
       setIsLoading(false);
       console.log("failure");
     }
@@ -71,18 +74,18 @@ const Signin = () => {
       className="card container mt-S"
       style={{ marginTop: "100px", width: "500px" }}
     >
-      {isLogin ? (
+      {props.loginStatus ? (
         <>
           {console.log({ email })}
           <h1>Welcome to Rentable, {email}!</h1>
-          <button onClick={() => setIsLogin(false)} className="btn btn-dark">
+          <button onClick={() => props.handleLogout()} className="btn btn-dark">
             Logout
           </button>
         </>
       ) : (
         <div className="card-body">
           <h1 className="card-title"></h1>
-          {error && <h1 className="text-danger">{error}</h1>}
+          {error && <h3 className="text-danger">{error}</h3>}
           <form onSubmit={loginUser}>
             <div className="mb-3">
               <GoogleLogin

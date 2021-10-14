@@ -8,7 +8,7 @@ import {
   NavBtnLink,
 } from "./NavbarElements";
 
-const Navbar = () => {
+const Navbar = (props) => {
   return (
     <div>
       <Nav>
@@ -17,25 +17,31 @@ const Navbar = () => {
         </NavLink>
         <Bars />
         <NavMenu>
-          <NavLink to="/About" activeStyle>
+          <NavLink to="/about" activeStyle>
             About
           </NavLink>
-          <NavLink to="/Services" activeStyle>
+          <NavLink to="/services" activeStyle>
             Services
           </NavLink>
-          <NavLink to="/Contact-us" activeStyle>
+          <NavLink to="/contact-us" activeStyle>
             Contact Us
           </NavLink>
           <NavLink to="/signup" activeStyle>
             Sign Up
           </NavLink>
-          <NavLink to="/renterHome" activeStyle>
-            RenterHome
+          <NavLink to="/renter-account" activeStyle>
+            My Account
           </NavLink>
         </NavMenu>
-        <NavBtn>
-          <NavBtnLink to="/signin">Sign In</NavBtnLink>
-        </NavBtn>
+        {props.loginStatus ? (
+          <NavBtn>
+            <NavBtnLink to="/signin">Log Out</NavBtnLink>
+          </NavBtn>
+        ) : (
+          <NavBtn>
+            <NavBtnLink to="/signin">Sign In</NavBtnLink>
+          </NavBtn>
+        )}
       </Nav>
     </div>
   );
