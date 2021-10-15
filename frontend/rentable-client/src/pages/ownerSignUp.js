@@ -1,30 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaBorderNone } from "react-icons/fa";
 
-// const case1 = ({username,password,confirmPassword,email}) =>{
-//     return new Promise((resolve, reject) =>{
-//         setTimeout(()=>{
-//             if(Object.is(password, confirmPassword) && password.length > 8){
-
-//                 // // Simple POST request with a JSON body using fetch
-//                 // const requestOptions = {
-//                 //     method: 'POST',
-//                 //     headers: { 'Content-Type': 'application/json' },
-//                 //     body: JSON.stringify({ title: 'React POST Request Example' })
-//                 // };
-//                 // fetch('/register', requestOptions)
-//                 //     .then(response => response.json())
-//                 //     .then(data => console.log(data));
-
-//                 resolve()
-//             }else{
-//                 reject()
-//             }
-//         },1000)
-//     })
-// }
-
-const Signup = (props) => {
+const OwnerSignUp = (props) => {
   const [email, setEmail] = useState("");
   // const [userType, setUserType] = useState("renter");
   const [loginType, setLoginType] = useState("manual");
@@ -220,4 +197,4 @@ const Signup = (props) => {
   );
 };
 
-export default Signup;
+export default OwnerSignUp;

@@ -1,25 +1,14 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+// import { BrowserRouter as Router, Switch, Route} from "react-router-dom"
 import GoogleLogin from "react-google-login";
-
-// const case1 = ({username,password}) =>{
-//     return new Promise((resolve, reject) =>{
-//     setTimeout(()=>{
-//         if(Object.is(username,"bilibili") && Object.is(password,"bilibili")){
-//             resolve()
-//         }else{
-//             reject()
-//         }
-//     },2000)
-//     })
-// }
+import { Link } from "react-router-dom";
 
 const responseGoogle = (response) => {
   console.log(response);
   console.log(response.profileObj);
 };
 
-const Signin = (props) => {
+const OwnerSignIn = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginType, setLoginType] = useState("manual");
@@ -138,11 +127,10 @@ const Signin = (props) => {
               <a href="forgotPassword">Forgot my password</a>
             </div>
           </form>
-
           <div>
             <center>
-              <Link to="/signup" className="btn btn-primary">
-                Create New User Account
+              <Link to="/owner-signup" className="btn btn-primary">
+                Create New Owner Account
               </Link>
             </center>
           </div>
@@ -152,4 +140,4 @@ const Signin = (props) => {
   );
 };
 
-export default Signin;
+export default OwnerSignIn;

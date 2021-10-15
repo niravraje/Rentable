@@ -17,28 +17,30 @@ const Navbar = (props) => {
         </NavLink>
         <Bars />
         <NavMenu>
-          <NavLink to="/about" activeStyle>
-            About
-          </NavLink>
-          <NavLink to="/services" activeStyle>
-            Services
-          </NavLink>
-          <NavLink to="/contact-us" activeStyle>
-            Contact Us
-          </NavLink>
-          <NavLink to="/signup" activeStyle>
-            Sign Up
-          </NavLink>
-          <NavLink to="/renter-account" activeStyle>
-            My Account
-          </NavLink>
+          <NavLink to="/about">About</NavLink>
+          <NavLink to="/services">Services</NavLink>
+          <NavLink to="/contact-us">Contact Us</NavLink>
+          <NavLink to="/owner-signin">List with Us</NavLink>
+
+          {/* <NavLink to="/signup">Sign Up</NavLink> */}
+          {props.loginStatus ? (
+            <NavLink to="/renter-account">My Account</NavLink>
+          ) : null}
         </NavMenu>
         {props.loginStatus ? (
           <NavBtn>
-            <NavBtnLink to="/signin">Log Out</NavBtnLink>
+            <NavBtnLink
+              to="/"
+              onClick={() => {
+                props.handleLogout();
+              }}
+            >
+              Log Out
+            </NavBtnLink>
           </NavBtn>
         ) : (
           <NavBtn>
+            <NavBtnLink to="/signup">Register</NavBtnLink>
             <NavBtnLink to="/signin">Sign In</NavBtnLink>
           </NavBtn>
         )}
