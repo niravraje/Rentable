@@ -3,7 +3,6 @@ import { FaBorderNone } from "react-icons/fa";
 
 const OwnerSignUp = (props) => {
   const [email, setEmail] = useState("");
-  // const [userType, setUserType] = useState("renter");
   const [loginType, setLoginType] = useState("manual");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -11,11 +10,13 @@ const OwnerSignUp = (props) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  // const [isLogin, setIsLogin] = useState(false);
 
   const registerUser = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+
+    props.handleUserType("owner");
+    console.log("User type: " + props.userType);
 
     const requestOptions = {
       method: "POST",
@@ -23,7 +24,7 @@ const OwnerSignUp = (props) => {
       body: JSON.stringify({
         email: email,
         login_type: loginType,
-        user_type: props.userType,
+        user_type: "owner",
         first_name: firstName,
         last_name: lastName,
         password: password,
@@ -32,22 +33,13 @@ const OwnerSignUp = (props) => {
     try {
       console.log(requestOptions);
       const res = await fetch("/register", requestOptions);
-      // .then((res) => res.json())
-      // .then((data) => {
-      //   console.log(data);
-      //   console.log("Registration response token: " + data.access_token);
-      // });
       console.log(res);
       const data = await res.json();
       console.log("Registration response token: " + data);
       console.log("Access token received on register: " + data.access_token);
       sessionStorage.setItem("token", data.access_token);
-      // setUsername(username)
-      // setPassword(password)
-      // setEmail(email)
       setError("");
       setIsLoading(false);
-      // setIsLogin(true);
       console.log(
         "Signup.js: Before setting login status: " + props.loginStatus
       );
@@ -57,7 +49,6 @@ const OwnerSignUp = (props) => {
       );
 
       console.log("success");
-      // resolve()
     } catch (error) {
       setFirstName("");
       setLastName("");
@@ -70,34 +61,8 @@ const OwnerSignUp = (props) => {
       );
       setIsLoading(false);
       console.log("failure");
-      // reject()
     }
   };
-
-  //   const handleSubmit = async (e) => {
-  //     e.preventDefault();
-  //     setIsLoading(true);
-  //     try {
-  //       await registerUser({ username, password, confirmPassword, email });
-  //       setUsername(username);
-  //       setPassword(password);
-  //       setEmail(email);
-  //       setError("");
-  //       setIsLoading(false);
-  //       setIsLogin(true);
-  //       console.log("success");
-  //     } catch (error) {
-  //       setUsername("");
-  //       setPassword("");
-  //       setConfirmPassword("");
-  //       setEmail("");
-  //       setError(
-  //         "Passwords do not match or your password is less than 9 characters."
-  //       );
-  //       setIsLoading(false);
-  //       console.log("failure");
-  //     }
-  //   };
 
   return (
     <div
@@ -115,9 +80,9 @@ const OwnerSignUp = (props) => {
         <div className="card-body">
           <h1 className="card-title"></h1>
           {error && (
-            <h1 className="text-danger" style={{ fontsize: "100px" }}>
+            <p className="text-danger" style={{ fontsize: "100px" }}>
               {error}
-            </h1>
+            </p>
           )}
           <form onSubmit={registerUser}>
             <div className="mb-3">

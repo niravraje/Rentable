@@ -16,6 +16,7 @@ const Navbar = (props) => {
           <h1>Rentable</h1>
         </NavLink>
         <Bars />
+
         <NavMenu>
           <NavLink to="/about">About</NavLink>
           <NavLink to="/services">Services</NavLink>
@@ -23,10 +24,15 @@ const Navbar = (props) => {
           <NavLink to="/owner-signin">List with Us</NavLink>
 
           {/* <NavLink to="/signup">Sign Up</NavLink> */}
-          {props.loginStatus ? (
+          {props.loginStatus && props.userType == "renter" ? (
             <NavLink to="/renter-account">My Account</NavLink>
           ) : null}
+
+          {props.loginStatus && props.userType == "owner" ? (
+            <NavLink to="/owner-account">Owner Account</NavLink>
+          ) : null}
         </NavMenu>
+
         {props.loginStatus ? (
           <NavBtn>
             <NavBtnLink
@@ -40,7 +46,8 @@ const Navbar = (props) => {
           </NavBtn>
         ) : (
           <NavBtn>
-            <NavBtnLink to="/signup">Register</NavBtnLink>
+            {/* <NavBtnLink to="/signup">Register</NavBtnLink> */}
+
             <NavBtnLink to="/signin">Sign In</NavBtnLink>
           </NavBtn>
         )}

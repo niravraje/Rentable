@@ -23,7 +23,6 @@ const Signin = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginType, setLoginType] = useState("manual");
-
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   //   const [isLogin, setIsLogin] = useState(false);
@@ -31,12 +30,15 @@ const Signin = (props) => {
   const loginUser = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    props.handleUserType("renter");
+    console.log("User type: " + props.userType);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: email,
         login_type: loginType,
+        user_type: "renter",
         password: password,
       }),
     };
@@ -53,10 +55,10 @@ const Signin = (props) => {
       sessionStorage.setItem("token", data.access_token);
       setError("");
       setIsLoading(false);
-      //   setIsLogin(true);
       console.log("props.handleLogin: " + props.handleLogin);
       console.log("Before setting login status: " + props.loginStatus);
       props.handleLogin();
+
       console.log("props.handleLogin() executed...");
 
       console.log("User authenticated successfully");
@@ -87,7 +89,7 @@ const Signin = (props) => {
       ) : (
         <div className="card-body">
           <h1 className="card-title"></h1>
-          {error && <h3 className="text-danger">{error}</h3>}
+          {error && <p className="text-danger">{error}</p>}
           <form onSubmit={loginUser}>
             <div className="mb-3">
               <GoogleLogin

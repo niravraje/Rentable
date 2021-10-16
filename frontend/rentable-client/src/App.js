@@ -9,7 +9,7 @@ import SignIn from "./pages/signin";
 import SignUp from "./pages/signup";
 import OwnerSignIn from "./pages/ownerSignIn";
 import OwnerSignUp from "./pages/ownerSignUp";
-
+import OwnerAccount from "./pages/ownerAccount";
 import RenterAccount from "./pages/renterAccount";
 import forgotPassword from "./pages/forgotPassword";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -42,8 +42,8 @@ function App() {
         <Route path="/about" exact component={About} />
         <Route path="/services" exact component={Services} />
         <Route path="/contact-us" exact component={ContactUs} />
-        <Route path="/owner-signin" exact component={OwnerSignIn} />
-        <Route path="/owner-signup" exact component={OwnerSignUp} />
+        {/* <Route path="/owner-signin" exact component={OwnerSignIn} />
+        <Route path="/owner-signup" exact component={OwnerSignUp} /> */}
 
         <Route
           exact
@@ -53,6 +53,8 @@ function App() {
               {...props}
               handleLogin={handleLogin}
               loginStatus={loginStatus}
+              userType={userType}
+              handleUserType={handleUserType}
             />
           )}
         />
@@ -65,17 +67,51 @@ function App() {
               handleLogin={handleLogin}
               loginStatus={loginStatus}
               userType={userType}
+              handleUserType={handleUserType}
             />
           )}
         />
-        {/* <Route path="/signin" exact component={Signin} /> */}
-        {/* <Route path="/signup" exact component={Signup} /> */}
+
+        <Route
+          exact
+          path="/owner-signin"
+          render={(props) => (
+            <OwnerSignIn
+              {...props}
+              handleLogin={handleLogin}
+              loginStatus={loginStatus}
+              userType={userType}
+              handleUserType={handleUserType}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/owner-signup"
+          render={(props) => (
+            <OwnerSignUp
+              {...props}
+              handleLogin={handleLogin}
+              loginStatus={loginStatus}
+              userType={userType}
+              handleUserType={handleUserType}
+            />
+          )}
+        />
         <ProtectedRoute
           exact
           path="/renter-account"
           loginStatus={loginStatus}
           userType={userType}
           component={RenterAccount}
+        />
+
+        <ProtectedRoute
+          exact
+          path="/owner-account"
+          loginStatus={loginStatus}
+          userType={userType}
+          component={OwnerAccount}
         />
 
         <Route path="/forgotPassword" exact component={forgotPassword} />

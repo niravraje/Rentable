@@ -39,6 +39,8 @@ const Signup = (props) => {
   const registerUser = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    props.handleUserType("renter");
+    console.log("User type: " + props.userType);
 
     const requestOptions = {
       method: "POST",
@@ -46,7 +48,7 @@ const Signup = (props) => {
       body: JSON.stringify({
         email: email,
         login_type: loginType,
-        user_type: props.userType,
+        user_type: "renter",
         first_name: firstName,
         last_name: lastName,
         password: password,
@@ -88,9 +90,7 @@ const Signup = (props) => {
       setPassword("");
       setConfirmPassword("");
 
-      setError(
-        "Passwords do not match or your password is less than 9 characters."
-      );
+      setError("Invalid data entered. Please check your responses.");
       setIsLoading(false);
       console.log("failure");
       // reject()
@@ -138,9 +138,9 @@ const Signup = (props) => {
         <div className="card-body">
           <h1 className="card-title"></h1>
           {error && (
-            <h1 className="text-danger" style={{ fontsize: "100px" }}>
+            <p className="text-danger" style={{ fontsize: "100px" }}>
               {error}
-            </h1>
+            </p>
           )}
           <form onSubmit={registerUser}>
             <div className="mb-3">

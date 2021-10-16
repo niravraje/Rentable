@@ -4,12 +4,12 @@ from flask_jwt_extended import create_access_token, JWTManager
 import pymysql
 
 conn = pymysql.connect(
-    host = 'localhost',
-    database = 'rentable',
-    user = 'root',
-    password = 'password@123',
-    charset = 'utf8mb4',
-    cursorclass = pymysql.cursors.DictCursor
+    host='localhost',
+    database='rentable',
+    user='root',
+    password='password@123',
+    charset='utf8mb4',
+    cursorclass=pymysql.cursors.DictCursor
 )
 
 app = Flask(__name__)
@@ -17,6 +17,7 @@ app = Flask(__name__)
 # --- JWT Initialization ---
 app.config["JWT_SECRET_KEY"] = "rentable"
 jwt = JWTManager(app)
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -38,29 +39,32 @@ def register():
         result = cur.fetchone()
         user_count = result.get('user_count')
         user_count += 1
-        username += str(user_count)  
-     
+        username += str(user_count)
+
         # Insert into login table
         cur = conn.cursor()
         query_insert_login = """INSERT INTO 
-        login(email, password, login_type) 
-        VALUES(%s, %s, %s)"""
-        cur.execute(query_insert_login, (email, password, login_type))
+        login(email, password, login_type, user_type) 
+        VALUES(%s, %s, %s, %s)"""
+        cur.execute(query_insert_login,
+                    (email, password, login_type, user_type))
         conn.commit()
-        
+
         # Insert into user table
         cur = conn.cursor()
         query_insert_user = """INSERT INTO 
         user(username, user_type, first_name, last_name, email) 
         VALUES(%s, %s, %s, %s, %s)"""
-        cur.execute(query_insert_user, (username, user_type, first_name, last_name, email))
+        cur.execute(query_insert_user, (username, user_type,
+                    first_name, last_name, email))
         conn.commit()
 
-        access_token = create_access_token(identity = email)
+        access_token = create_access_token(identity=email)
 
-        return jsonify(access_token = access_token), 201
+        return jsonify(access_token=access_token), 201
     else:
         return jsonify(({'msg': 'HTTP method must be POST'})), 405
+
 
 @app.route('/sign_in', methods=['GET', 'POST'])
 def sign_in():
@@ -68,6 +72,7 @@ def sign_in():
         email = request.json.get('email')
         password = request.json.get('password')
         login_type = request.json.get('login_type')
+        user_type = request.json.get('user_type')
         token = request.json.get('token')
 
         # Search for user
@@ -76,24 +81,21 @@ def sign_in():
         if cur.execute(query_find_user, email):
             result = cur.fetchone()
             fetched_password = result.get('password')
+            fetched_user_type = result.get('user_type')
         else:
             return jsonify({'msg': 'User not found.'}), 404
 
         # Manual login
         if login_type == 'manual':
-            if check_password_hash(fetched_password, password):
-                access_token = create_access_token(identity = email)
-                return jsonify(access_token = access_token), 202
+            if check_password_hash(fetched_password, password) and user_type == fetched_user_type:
+                access_token = create_access_token(identity=email)
+                return jsonify(access_token=access_token), 202
             else:
                 return jsonify({'msg': 'Login failed'}), 401
 
         # Google OAuth login
-        
+
         return jsonify({'msg': 'Unsupported login type'}), 400
-
-
-
-
 
 
 if __name__ == '__main__':

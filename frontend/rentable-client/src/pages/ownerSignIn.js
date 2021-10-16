@@ -12,20 +12,21 @@ const OwnerSignIn = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginType, setLoginType] = useState("manual");
-
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  //   const [isLogin, setIsLogin] = useState(false);
 
   const loginUser = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    props.handleUserType("owner");
+    console.log("User type: " + props.userType);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: email,
         login_type: loginType,
+        user_type: "owner",
         password: password,
       }),
     };
@@ -38,6 +39,11 @@ const OwnerSignIn = (props) => {
       console.log("Status code of login request: " + res.status);
       console.log("Login request's res.json(): " + JSON.stringify(data));
       console.log("Access token received on login: " + data.access_token);
+
+      if (res.status == "401") {
+        setError("Unauthorized. Invalid username or password.");
+        return;
+      }
 
       sessionStorage.setItem("token", data.access_token);
       setError("");
@@ -53,7 +59,7 @@ const OwnerSignIn = (props) => {
       setEmail("");
       setPassword("");
       console.log("props.loginStatus value is: " + props.loginStatus);
-      setError("Error. Invalid username/password or internal server error.");
+      setError("Error. Internal server error.");
 
       setIsLoading(false);
       console.log("failure");
@@ -76,7 +82,7 @@ const OwnerSignIn = (props) => {
       ) : (
         <div className="card-body">
           <h1 className="card-title"></h1>
-          {error && <h3 className="text-danger">{error}</h3>}
+          {error && <p className="text-danger">{error}</p>}
           <form onSubmit={loginUser}>
             <div className="mb-3">
               <GoogleLogin
