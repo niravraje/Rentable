@@ -43,17 +43,21 @@ def register():
 
         # Insert into login table
         cur = conn.cursor()
-        query_insert_login = """INSERT INTO 
-        login(email, password, login_type, user_type) 
+        query_insert_login = """INSERT INTO
+        login(email, password, login_type, user_type)
         VALUES(%s, %s, %s, %s)"""
         cur.execute(query_insert_login,
                     (email, password, login_type, user_type))
+
+        # query_insert_login = "INSERT INTO login(email, password, login_type, user_type) VALUES({},{},{},{})".format(
+        #     email, password, login_type, user_type)
+        # cur.execute(query_insert_login)
         conn.commit()
 
         # Insert into user table
         cur = conn.cursor()
-        query_insert_user = """INSERT INTO 
-        user(username, user_type, first_name, last_name, email) 
+        query_insert_user = """INSERT INTO
+        user(username, user_type, first_name, last_name, email)
         VALUES(%s, %s, %s, %s, %s)"""
         cur.execute(query_insert_user, (username, user_type,
                     first_name, last_name, email))
@@ -96,6 +100,20 @@ def sign_in():
         # Google OAuth login
 
         return jsonify({'msg': 'Unsupported login type'}), 400
+
+
+@app.route('/get_products', methods=['GET', 'POST'])
+def get_products():
+    if request.method == 'GET':
+        cur = conn.cursor()
+
+        query_get_all_products = """SELECT * FROM product"""
+        if cur.execute(query_get_all_products):
+            result = cur.fetchall()
+            print('result: ', result)
+            return jsonify(result)
+        else:
+            return jsonify({'msg': 'User not found.'}), 404
 
 
 if __name__ == '__main__':
