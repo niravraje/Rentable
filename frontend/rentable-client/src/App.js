@@ -11,8 +11,9 @@ import OwnerSignIn from "./pages/ownerSignIn";
 import OwnerSignUp from "./pages/ownerSignUp";
 import OwnerAccount from "./pages/ownerAccount";
 import RenterAccount from "./pages/renterAccount";
-import forgotPassword from "./pages/forgotPassword";
+import ForgotPassword from "./pages/forgotPassword";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminDashboard from "./pages/adminDashboard";
 
 function App() {
   const [loginStatus, setLoginStatus] = useState(false);
@@ -112,7 +113,15 @@ function App() {
           component={OwnerAccount}
         />
 
-        <Route path="/forgotPassword" exact component={forgotPassword} />
+        <ProtectedRoute
+          exact
+          path="/admin-dashboard"
+          loginStatus={loginStatus}
+          userType={userType}
+          component={AdminDashboard}
+        />
+
+        <Route path="/forgot-password" exact component={ForgotPassword} />
       </Switch>
     </Router>
   );

@@ -1,6 +1,6 @@
 .search-bar-div {
   display: flex;
-  /* width: 100vw; */
+  width: 100vw;
   align-items: center;
   flex-direction: column;
   font-family: Arial, Helvetica, sans-serif;

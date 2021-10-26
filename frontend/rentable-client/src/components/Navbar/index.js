@@ -31,6 +31,10 @@ const Navbar = (props) => {
           {props.loginStatus && props.userType == "owner" ? (
             <NavLink to="/owner-account">Owner Account</NavLink>
           ) : null}
+
+          {props.loginStatus && props.userType == "admin" ? (
+            <NavLink to="/admin-dashboard">Admin Dashboard</NavLink>
+          ) : null}
         </NavMenu>
 
         {props.loginStatus ? (

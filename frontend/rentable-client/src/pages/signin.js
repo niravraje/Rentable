@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import GoogleLogin from "react-google-login";
 
 // const case1 = ({username,password}) =>{
@@ -30,15 +30,26 @@ const Signin = (props) => {
   const loginUser = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    props.handleUserType("renter");
+    let userTypeLocal = props.userType;
+
     console.log("User type: " + props.userType);
+
+    if (email === "admin@rentable.com") {
+      props.handleUserType("admin");
+      userTypeLocal = "admin";
+    } else {
+      props.handleUserType("renter");
+      userTypeLocal = "renter";
+    }
+    console.log("After handling: User type local: " + userTypeLocal);
+
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: email,
         login_type: loginType,
-        user_type: "renter",
+        user_type: userTypeLocal,
         password: password,
       }),
     };
@@ -80,11 +91,13 @@ const Signin = (props) => {
     >
       {props.loginStatus ? (
         <>
-          {console.log({ email })}
-          <h1>Welcome to Rentable, {email}!</h1>
-          {/* <button onClick={() => props.handleLogout()} className="btn btn-dark">
-            Logout
-          </button> */}
+          {console.log("Email ID of user logged in: " + email)}
+          {console.log("User type of user logged in: " + props.userType)}
+          {props.userType === "admin" ? (
+            <Redirect to="/admin-dashboard" />
+          ) : (
+            <Redirect to="/renter-account" />
+          )}
         </>
       ) : (
         <div className="card-body">
@@ -137,7 +150,7 @@ const Signin = (props) => {
               className="mb-3"
               style={{ textAlign: "center", marginTop: "25px" }}
             >
-              <a href="forgotPassword">Forgot my password</a>
+              <a href="/forgot-password">Forgot my password</a>
             </div>
           </form>
 

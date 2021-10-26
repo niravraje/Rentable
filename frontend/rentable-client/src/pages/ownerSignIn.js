@@ -130,7 +130,7 @@ const OwnerSignIn = (props) => {
               className="mb-3"
               style={{ textAlign: "center", marginTop: "25px" }}
             >
-              <a href="forgotPassword">Forgot my password</a>
+              <a href="forgot-password">Forgot my password</a>
             </div>
           </form>
           <div>
