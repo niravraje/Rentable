@@ -1,30 +1,23 @@
 import React, { useState } from "react";
 import "./SearchBar.css";
-//npm install @material-ui/core
 import SearchIcon from "@material-ui/icons/Search";
-//npm install @material-ui/icons
 import CloseIcon from "@material-ui/icons/Close";
+import CardPage from "../Card/CardPage.js";
 
-function SearchBar({ placeholder, data }) {
-  const [filteredData, setFilteredData] = useState([]);
+function SearchBar({ placeholder, filterCards, displayAllCards }) {
   const [wordEntered, setWordEntered] = useState("");
+
+  const updateCards = () => {
+    displayAllCards();
+  };
 
   const handleFilter = (event) => {
     const searchWord = event.target.value;
     setWordEntered(searchWord);
-    const newFilter = data.filter((value) => {
-      return value.title.toLowerCase().includes(searchWord.toLowerCase());
-    });
-
-    if (searchWord === "") {
-      setFilteredData([]);
-    } else {
-      setFilteredData(newFilter);
-    }
+    filterCards(wordEntered);
   };
 
   const clearInput = () => {
-    setFilteredData([]);
     setWordEntered("");
   };
 
@@ -38,24 +31,13 @@ function SearchBar({ placeholder, data }) {
           onChange={handleFilter}
         />
         <div className="searchIcon">
-          {filteredData.length === 0 ? (
-            <SearchIcon />
+          {wordEntered.length === 0 ? (
+            updateCards(<SearchIcon />)
           ) : (
             <CloseIcon id="clearBtn" onClick={clearInput} />
           )}
         </div>
       </div>
-      {filteredData.length != 0 && (
-        <div className="dataResult">
-          {filteredData.slice(0, 15).map((value, key) => {
-            return (
-              <a className="dataItem" href={value.link} target="_blank">
-                <p>{value.title} </p>
-              </a>
-            );
-          })}
-        </div>
-      )}
     </div>
   );
 }
