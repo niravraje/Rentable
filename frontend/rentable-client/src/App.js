@@ -9,7 +9,8 @@ import SignIn from "./pages/signin";
 import SignUp from "./pages/signup";
 import OwnerSignIn from "./pages/ownerSignIn";
 import OwnerSignUp from "./pages/ownerSignUp";
-import OwnerAccount from "./pages/ownerAccount";
+import OwnerDashboard from "./pages/ownerDashboard";
+import OwnerAddNewListing from "./pages/ownerAddNewListing";
 import RenterAccount from "./pages/renterAccount";
 import ForgotPassword from "./pages/forgotPassword";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -107,10 +108,10 @@ function App() {
 
         <ProtectedRoute
           exact
-          path="/owner-account"
+          path="/owner-dashboard"
           loginStatus={loginStatus}
           userType={userType}
-          component={OwnerAccount}
+          component={OwnerDashboard}
         />
 
         <ProtectedRoute
@@ -120,8 +121,8 @@ function App() {
           userType={userType}
           component={AdminDashboard}
         />
-
         <Route path="/forgot-password" exact component={ForgotPassword} />
+        <Route path="/add-new-listing" exact component={OwnerAddNewListing} />
       </Switch>
     </Router>
   );

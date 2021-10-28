@@ -1,5 +1,4 @@
 import React from "react";
-// import OwnerDashboardList from "../components/OwnerDashboardList";
 
 const AdminDashboard = () => {
   return (
@@ -12,7 +11,6 @@ const AdminDashboard = () => {
       }}
     >
       <h1>Admin Dashboard</h1>
-      {/* <OwnerDashboardList></OwnerDashboardList> */}
     </div>
   );
 };

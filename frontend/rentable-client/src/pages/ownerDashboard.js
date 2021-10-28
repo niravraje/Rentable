@@ -1,6 +1,7 @@
 import React from "react";
+import OwnerDashboardList from "../components/OwnerDashboardList";
 
-const OwnerAccount = () => {
+const OwnerDashboard = () => {
   return (
     <div
       style={{
@@ -10,9 +11,9 @@ const OwnerAccount = () => {
         height: "90vh",
       }}
     >
-      <h1>Welcome, Owner!</h1>
+      <OwnerDashboardList></OwnerDashboardList>
     </div>
   );
 };
 
-export default OwnerAccount;
+export default OwnerDashboard;

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import GoogleLogin from "react-google-login";
+import Form from "react-bootstrap/Form";
 
 // const case1 = ({username,password}) =>{
 //     return new Promise((resolve, reject) =>{
@@ -113,7 +114,6 @@ const Signin = (props) => {
                 cookiePolicy={"single_host_origin"}
               />
             </div>
-
             <div className="mb-3">
               <label htmlFor="Inputemail" className="form-label">
                 Email
