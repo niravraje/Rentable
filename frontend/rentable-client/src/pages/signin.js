@@ -64,6 +64,12 @@ const Signin = (props) => {
       console.log("Login request's res.json(): " + JSON.stringify(data));
       console.log("Access token received on login: " + data.access_token);
 
+      if (res.status == "401") {
+        setError("Unauthorized. Invalid username or password.");
+        setIsLoading(false);
+        return;
+      }
+
       sessionStorage.setItem("token", data.access_token);
       setError("");
       setIsLoading(false);
@@ -78,7 +84,7 @@ const Signin = (props) => {
       setEmail("");
       setPassword("");
       console.log("props.loginStatus value is: " + props.loginStatus);
-      setError("Error. Invalid username/password or internal server error.");
+      setError("Error. Internal server error.");
 
       setIsLoading(false);
       console.log("failure");
@@ -144,7 +150,7 @@ const Signin = (props) => {
               type="submit"
               className="btn btn-dark btn-primary w-100"
             >
-              {isLoading ? "Loading..." : "Sign in"}
+              {isLoading ? "Signing In" : "Sign in"}
             </button>
             <div
               className="mb-3"

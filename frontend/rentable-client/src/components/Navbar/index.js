@@ -13,10 +13,10 @@ const Navbar = (props) => {
     <div>
       <Nav>
         <NavLink to="/">
-          <h1>Rentable</h1>
+          <h1>rentable</h1>
+          {/* <img src="rentable_logo.png" alt="rentable"></img> */}
         </NavLink>
-        <Bars />
-
+        <Bars></Bars>
         <NavMenu>
           <NavLink to="/about">About</NavLink>
           <NavLink to="/services">Services</NavLink>
@@ -36,7 +36,6 @@ const Navbar = (props) => {
             <NavLink to="/admin-dashboard">Admin Dashboard</NavLink>
           ) : null}
         </NavMenu>
-
         {props.loginStatus ? (
           <NavBtn>
             <NavBtnLink
