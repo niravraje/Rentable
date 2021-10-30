@@ -101,7 +101,7 @@ const Signin = (props) => {
           {props.userType === "admin" ? (
             <Redirect to="/admin-dashboard" />
           ) : (
-            <Redirect to="/renter-dashboard" />
+            <Redirect to="/" />
           )}
         </>
       ) : (
