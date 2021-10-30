@@ -22,7 +22,7 @@ const AdminDashboard = () => {
             View Complaints
           </button>
           <button type="submit" className="btn btn-primary w-100 menu-buttons">
-            Approve Items
+            Issue Refund
           </button>
         </form>
       </div>

@@ -33,8 +33,6 @@ const Signin = (props) => {
     setIsLoading(true);
     let userTypeLocal = props.userType;
 
-    console.log("User type: " + props.userType);
-
     if (email === "admin@rentable.com") {
       props.handleUserType("admin");
       userTypeLocal = "admin";
@@ -103,7 +101,7 @@ const Signin = (props) => {
           {props.userType === "admin" ? (
             <Redirect to="/admin-dashboard" />
           ) : (
-            <Redirect to="/renter-account" />
+            <Redirect to="/renter-dashboard" />
           )}
         </>
       ) : (

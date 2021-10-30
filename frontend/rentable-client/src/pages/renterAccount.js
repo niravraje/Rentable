@@ -10,7 +10,7 @@ const RenterAccount = () => {
         height: "90vh",
       }}
     >
-      <h1>Welcome, Renter!</h1>
+      <h1>Renter Account Page</h1>
     </div>
   );
 };

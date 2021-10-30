@@ -21,7 +21,10 @@ const Navbar = (props) => {
           <NavLink to="/about">About</NavLink>
           <NavLink to="/services">Services</NavLink>
           <NavLink to="/contact-us">Contact Us</NavLink>
-          <NavLink to="/owner-signin">List with Us</NavLink>
+
+          {!props.loginStatus ? (
+            <NavLink to="/owner-signin">List with Us</NavLink>
+          ) : null}
 
           {/* <NavLink to="/signup">Sign Up</NavLink> */}
           {props.loginStatus && props.userType == "renter" ? (

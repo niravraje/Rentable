@@ -12,13 +12,20 @@ import OwnerSignUp from "./pages/ownerSignUp";
 import OwnerDashboard from "./pages/ownerDashboard";
 import OwnerAddNewListing from "./pages/ownerAddNewListing";
 import RenterAccount from "./pages/renterAccount";
+import RenterDashboard from "./pages/renterDashboard";
 import ForgotPassword from "./pages/forgotPassword";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminDashboard from "./pages/adminDashboard";
 
 function App() {
-  const [loginStatus, setLoginStatus] = useState(false);
-  const [userType, setUserType] = useState("renter");
+  const [loginStatus, setLoginStatus] = useState(
+    sessionStorage.getItem("token") ? true : false
+  );
+  const [userType, setUserType] = useState(
+    sessionStorage.getItem("user_type")
+      ? sessionStorage.getItem("user_type")
+      : ""
+  );
 
   const handleLogin = () => {
     setLoginStatus(true);
@@ -30,6 +37,7 @@ function App() {
 
   const handleUserType = (userTypeValue) => {
     setUserType(userTypeValue);
+    sessionStorage.setItem("user_type", userTypeValue);
   };
 
   return (
@@ -44,7 +52,6 @@ function App() {
         <Route path="/about" exact component={About} />
         <Route path="/services" exact component={Services} />
         <Route path="/contact-us" exact component={ContactUs} />
-
         <Route
           exact
           path="/signin"
@@ -71,7 +78,6 @@ function App() {
             />
           )}
         />
-
         <Route
           exact
           path="/owner-signin"
@@ -105,6 +111,13 @@ function App() {
           userType={userType}
           component={RenterAccount}
         />
+        <ProtectedRoute
+          exact
+          path="/renter-dashboard"
+          loginStatus={loginStatus}
+          userType={userType}
+          component={RenterDashboard}
+        />
 
         <ProtectedRoute
           exact
@@ -113,7 +126,6 @@ function App() {
           userType={userType}
           component={OwnerDashboard}
         />
-
         <ProtectedRoute
           exact
           path="/admin-dashboard"

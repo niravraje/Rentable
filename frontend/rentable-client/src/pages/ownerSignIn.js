@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 // import { BrowserRouter as Router, Switch, Route} from "react-router-dom"
 import GoogleLogin from "react-google-login";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 const responseGoogle = (response) => {
   console.log(response);
@@ -20,13 +20,23 @@ const OwnerSignIn = (props) => {
     setIsLoading(true);
     props.handleUserType("owner");
     console.log("User type: " + props.userType);
+    let userTypeLocal = props.userType;
+
+    if (email === "admin@rentable.com") {
+      props.handleUserType("admin");
+      userTypeLocal = "admin";
+    } else {
+      props.handleUserType("owner");
+      userTypeLocal = "owner";
+    }
+
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: email,
         login_type: loginType,
-        user_type: "owner",
+        user_type: userTypeLocal,
         password: password,
       }),
     };
@@ -42,6 +52,7 @@ const OwnerSignIn = (props) => {
 
       if (res.status == "401") {
         setError("Unauthorized. Invalid username or password.");
+        setIsLoading(false);
         return;
       }
 
@@ -73,11 +84,13 @@ const OwnerSignIn = (props) => {
     >
       {props.loginStatus ? (
         <>
-          {console.log({ email })}
-          <h1>Welcome to Rentable, {email}!</h1>
-          {/* <button onClick={() => props.handleLogout()} className="btn btn-dark">
-            Logout
-          </button> */}
+          {console.log("Email ID of user logged in: " + email)}
+          {console.log("User type of user logged in: " + props.userType)}
+          {props.userType === "admin" ? (
+            <Redirect to="/admin-dashboard" />
+          ) : (
+            <Redirect to="/owner-dashboard" />
+          )}
         </>
       ) : (
         <div className="card-body">
