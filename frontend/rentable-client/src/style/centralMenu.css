@@ -9,5 +9,6 @@
 
 .menu-buttons:hover {
   background-color: darkgray;
+  /* background-color: rgb(80, 176, 255); */
   color: black;
 }

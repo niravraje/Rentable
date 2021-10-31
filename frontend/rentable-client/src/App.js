@@ -19,10 +19,13 @@ import AdminDashboard from "./pages/adminDashboard";
 
 function App() {
   const [loginStatus, setLoginStatus] = useState(
-    sessionStorage.getItem("token") !== "" ? true : false
+    sessionStorage.getItem("token") && sessionStorage.getItem("token") !== ""
+      ? true
+      : false
   );
   const [userType, setUserType] = useState(
-    sessionStorage.getItem("user_type") !== ""
+    sessionStorage.getItem("user_type") &&
+      sessionStorage.getItem("user_type") !== ""
       ? sessionStorage.getItem("user_type")
       : ""
   );

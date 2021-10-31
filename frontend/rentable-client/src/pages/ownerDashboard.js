@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect, Link } from "react-router-dom";
 import OwnerDashboardList from "../components/OwnerDashboardList";
 
 const OwnerDashboard = () => {
@@ -9,29 +10,30 @@ const OwnerDashboard = () => {
     >
       <div className="card-body">
         <h1 className="card-title"></h1>
-        <form>
-          <div>
-            <button
-              type="submit"
-              className="btn btn-primary w-100 menu-buttons"
-            >
-              View My Listings
-            </button>
-          </div>
-          <button
-            type="submit"
-            className="btn btn-primary w-100 menu-buttons"
-            href="/add-new-listing"
-          >
-            Add New Listing
-          </button>
-          <button type="submit" className="btn btn-primary w-100 menu-buttons">
-            View Orders
-          </button>
-          <button type="submit" className="btn btn-primary w-100 menu-buttons">
-            View Messages
-          </button>
-        </form>
+        <Link
+          to="/view-owner-listings"
+          className="btn btn-primary w-100 menu-buttons"
+        >
+          View My Listings
+        </Link>
+        <Link
+          to="/add-new-listing"
+          className="btn btn-primary w-100 menu-buttons"
+        >
+          Add New Listing
+        </Link>
+        <Link
+          to="/view-owner-orders"
+          className="btn btn-primary w-100 menu-buttons"
+        >
+          View Orders
+        </Link>
+        <Link
+          to="/view-owner-messages"
+          className="btn btn-primary w-100 menu-buttons"
+        >
+          View Messages
+        </Link>
       </div>
     </div>
 

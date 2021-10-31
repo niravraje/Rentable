@@ -62,9 +62,10 @@ const Signin = (props) => {
       console.log("Login request's res.json(): " + JSON.stringify(data));
       console.log("Access token received on login: " + data.access_token);
 
-      if (res.status == "401") {
+      if (res.status === 401) {
         setError("Unauthorized. Invalid username or password.");
         setIsLoading(false);
+        props.handleUserType("");
         return;
       }
 
