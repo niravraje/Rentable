@@ -19,6 +19,16 @@ app.config["JWT_SECRET_KEY"] = "rentable"
 jwt = JWTManager(app)
 
 
+def get_unique_id(table_name):
+    cur = conn.cursor()
+    query = """SELECT count(*) AS row_count FROM %s"""
+    cur.execute(query, table_name)
+    result = cur.fetchone()
+    row_count = result.get('row_count')
+    row_count += 1
+    return row_count
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -113,7 +123,26 @@ def get_products():
             print('result: ', result)
             return jsonify(result)
         else:
-            return jsonify({'msg': 'User not found.'}), 404
+            return jsonify({'msg': 'No products found in the database.'}), 404
+
+
+@app.route('/add_new_listing', methods=['GET', 'POST'])
+def add_new_listing():
+    if request.method == 'POST':
+        category = request.json.get('category')
+        title = request.json.get('title')
+        rent_price = request.json.get('rent_price')
+        rent_frequency = request.json.get('rent_frequency')
+        description = request.json.get('description')
+        owner_username = request.json.get('owner_username')
+
+        new_product_id = get_unique_id('product')
+        query_insert_listing = """INSERT INTO product(id, category, title, rent_price, rent_frequency, description, owner_username) VALUES(%s, %s, %s, %s, %s, %s, %s)"""
+
+        cur = conn.cursor()
+        cur.execute(query_insert_listing, (new_product_id, category, title,
+                    rent_price, rent_frequency, description, owner_username))
+        conn.commit()
 
 
 if __name__ == '__main__':

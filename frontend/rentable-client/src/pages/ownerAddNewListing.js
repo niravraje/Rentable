@@ -5,6 +5,20 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Button from "react-bootstrap/Button";
 
 const OwnerAddNewListing = () => {
+  const add_new_listing = async (e) => {
+    let userTypeLocal = sessionStorage.getItem("user_type");
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email,
+        login_type: loginType,
+        user_type: userTypeLocal,
+        password: password,
+      }),
+    };
+  };
+
   return (
     <div
       className="card container mt-S"
