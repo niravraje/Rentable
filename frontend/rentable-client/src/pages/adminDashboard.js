@@ -1,5 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../style/centralMenu.css";
+import { Domain } from "@material-ui/icons";
 
 const AdminDashboard = () => {
   return (
@@ -9,22 +11,27 @@ const AdminDashboard = () => {
     >
       <div className="card-body">
         <h1 className="card-title"></h1>
-        <form>
-          <div>
-            <button
-              type="submit"
-              className="btn btn-primary w-100 menu-buttons"
-            >
-              Approve Items
-            </button>
-          </div>
-          <button type="submit" className="btn btn-primary w-100 menu-buttons">
-            View Complaints
-          </button>
-          <button type="submit" className="btn btn-primary w-100 menu-buttons">
-            Issue Refund
-          </button>
-        </form>
+        <Link to="/admin-refund" className="btn btn-primary w-100 menu-buttons">
+          Issue a Refund
+        </Link>
+        <Link
+          to="/admin-approve-listings"
+          className="btn btn-primary w-100 menu-buttons"
+        >
+          Approve Listings
+        </Link>
+        <Link
+          to="/view-owner-orders"
+          className="btn btn-primary w-100 menu-buttons"
+        >
+          View Orders
+        </Link>
+        <Link
+          to="/admin-messages"
+          className="btn btn-primary w-100 menu-buttons"
+        >
+          View Messages
+        </Link>
       </div>
     </div>
 

@@ -22,11 +22,13 @@ jwt = JWTManager(app)
 def get_unique_id(table_name):
     cur = conn.cursor()
     query = """SELECT count(*) AS row_count FROM %s"""
-    cur.execute(query, table_name)
-    result = cur.fetchone()
-    row_count = result.get('row_count')
-    row_count += 1
-    return row_count
+    if cur.execute(query, table_name):
+        result = cur.fetchone()
+        row_count = result.get('row_count')
+        row_count += 1
+        return row_count
+    else:
+        return 1
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -135,14 +137,24 @@ def add_new_listing():
         rent_frequency = request.json.get('rent_frequency')
         description = request.json.get('description')
         owner_username = request.json.get('owner_username')
+        approval_status = 0
 
-        new_product_id = get_unique_id('product')
-        query_insert_listing = """INSERT INTO product(id, category, title, rent_price, rent_frequency, description, owner_username) VALUES(%s, %s, %s, %s, %s, %s, %s)"""
+        # new_product_id = get_unique_id('product')
+        cur = conn.cursor()
+        query = """SELECT count(*) AS row_count FROM product"""
+        new_product_id = 0
+        if cur.execute(query):
+            result = cur.fetchone()
+            row_count = result.get('row_count')
+            new_product_id = row_count + 1
+
+        query_insert_listing = """INSERT INTO product(id, approval_status, category, title, rent_price, rent_frequency, description, owner_username) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)"""
 
         cur = conn.cursor()
-        cur.execute(query_insert_listing, (new_product_id, category, title,
+        cur.execute(query_insert_listing, (new_product_id, approval_status, category, title,
                     rent_price, rent_frequency, description, owner_username))
         conn.commit()
+        return jsonify({'msg': 'Listing added successfully'}), 201
 
 
 if __name__ == '__main__':

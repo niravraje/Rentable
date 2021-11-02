@@ -16,6 +16,9 @@ import RenterDashboard from "./pages/renterDashboard";
 import ForgotPassword from "./pages/forgotPassword";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminDashboard from "./pages/adminDashboard";
+import AdminRefund from "./pages/adminRefund";
+import AdminMessages from "./pages/adminMessages";
+import ProductDetails from "./pages/productDetails";
 
 function App() {
   const [loginStatus, setLoginStatus] = useState(
@@ -138,8 +141,23 @@ function App() {
           userType={userType}
           component={AdminDashboard}
         />
+        <ProtectedRoute
+          exact
+          path="/admin-refund"
+          loginStatus={loginStatus}
+          userType={userType}
+          component={AdminRefund}
+        />
+        <ProtectedRoute
+          exact
+          path="/admin-messages"
+          loginStatus={loginStatus}
+          userType={userType}
+          component={AdminMessages}
+        />
         <Route path="/forgot-password" exact component={ForgotPassword} />
         <Route path="/add-new-listing" exact component={OwnerAddNewListing} />
+        <Route path="/product-details" exact component={ProductDetails} />
       </Switch>
     </Router>
   );

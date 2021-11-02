@@ -1,4 +1,4 @@
-.card {
+/* .card {
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -13,6 +13,50 @@
   grid-template-columns: repeat(auto-fit, minmax(12rem, 16rem));
   gap: 2rem;
   justify-content: center;
+}
+
+.image {
+  height: 12rem;
+  width: 100%;
+  object-fit: cover;
+}
+
+.title {
+  padding: 1rem;
+}
+
+.description {
+  padding: 0 1rem;
+} */
+
+/* 31st Oct 2021 */
+/* 
+.container {
+  margin: 30px auto;
+  overflow: auto;
+  min-height: 800px;
+  padding: 30px;
+  border-radius: 5px;
+} */
+
+.card {
+  overflow: hidden;
+  /* box-shadow: 0 2px 20px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: transform 200ms ease-in;
+}
+
+.wrapper {
+  margin-top: 100cm;
+  margin: 100px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 16rem));
+  gap: 2rem;
+  justify-content: center;
+  flex-direction: diable;
 }
 
 .image {
