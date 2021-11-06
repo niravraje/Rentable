@@ -122,8 +122,8 @@ def serve():
 
 @app.route('/get_products', methods=['GET', 'POST'])
 def get_products():
-    return "get products api"
-#     if request.method == 'GET':
+    if request.method == 'GET':
+        return jsonify({'msg': 'products api'})
 #         cur = conn.cursor()
 
 #         query_get_all_products = """SELECT * FROM product"""

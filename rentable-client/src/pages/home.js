@@ -58,7 +58,7 @@ const Home = () => {
   const [productData, setProductData] = useState(JSONDATAx);
 
   useEffect(() => {
-    console.log("hi");
+    console.log("useEffect triggered.");
 
     const get_products = async (e) => {
       const requestOptions = {
@@ -66,7 +66,10 @@ const Home = () => {
         headers: { "Content-Type": "application/json" },
       };
       try {
-        const res = await fetch("/get_products", requestOptions);
+        const res = await fetch(
+          "https://rentable1-api.herokuapp.com/get_products",
+          requestOptions
+        );
         console.log("Response on get_products request: " + res);
         const data = await res.json();
 
