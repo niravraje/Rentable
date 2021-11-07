@@ -55,7 +55,18 @@ import SearchBar from "../components/SearchBar/SearchBar.js";
 const Home = () => {
   const [cards, setCards] = useState([]);
   const [error, setError] = useState("");
-  const [productData, setProductData] = useState(JSONDATAx);
+  const [productData, setProductData] = useState([
+    {
+      approval_status: 0,
+      category: "car",
+      description: "Tesla Model S",
+      id: 1,
+      owner_username: "niravraje2",
+      rent_frequency: "day",
+      rent_price: "110",
+      title: "Tesla",
+    },
+  ]);
 
   useEffect(() => {
     console.log("useEffect triggered.");
@@ -89,7 +100,7 @@ const Home = () => {
         // setProductData(JSON.stringify(data));
         // setProductData(res.data);
         // console.log("data.category: ");
-        setProductData(JSONDATAx);
+        setProductData(data);
 
         return;
         console.log("Listing added successfully.");

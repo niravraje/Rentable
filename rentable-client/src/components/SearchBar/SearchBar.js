@@ -79,37 +79,12 @@ function SearchBar({ placeholder, data }) {
       const newFilter = data.filter((value) => {
         return (
           value.category.toLowerCase().includes(searchCate.toLowerCase()) &&
-          value.rent >= minVal &&
-          value.rent <= maxVal
+          value.rent_price >= minVal &&
+          value.rent_price <= maxVal
         );
       });
       setFilteredData(newFilter);
     }
-
-    // if (searchCate === "" && wordEntered ==="") {
-    //   setFilteredData([]);
-
-    // }else if(wordEntered != "" && searchCate===""){
-    //   const newFilter = data.filter((value) => {
-    //     return value.category.toLowerCase().includes(wordEntered.toLowerCase());
-    //   });
-    //   setFilteredData(newFilter);
-
-    // }else if(wordEntered === "" && searchCate!=""){
-    //   const newFilter = data.filter((value) => {
-    //     return value.category.toLowerCase().includes(searchCate.toLowerCase());
-    //   });
-    //   setFilteredData(newFilter);
-
-    // }else{
-    //   const newFilter = data.filter((value) => {
-    //     return value.category.toLowerCase().includes(searchCate.toLowerCase());
-    //   });
-    //   const newFilter1 = newFilter.filter((value) => {
-    //     return value.category.toLowerCase().includes(wordEntered.toLowerCase());
-    //   });
-    //   setFilteredData(newFilter1);
-    // }
   };
 
   const handleFilter = (event) => {
@@ -125,44 +100,18 @@ function SearchBar({ placeholder, data }) {
       return (
         value.category.toLowerCase().includes(category.toLowerCase()) &&
         value.title.toLowerCase().includes(searchWord.toLowerCase()) &&
-        value.rent >= minVal &&
-        value.rent <= maxVal
+        value.rent_price >= minVal &&
+        value.rent_price <= maxVal
       );
     });
     setFilteredData(newFilter);
-
-    // if (searchWord === "" && category === "") {
-    //   setFilteredData([]);
-
-    // } else if(category != "" && searchWord===""){
-    //   const newFilter = data.filter((value) => {
-    //     return value.category.toLowerCase().includes(category.toLowerCase());
-    //   });
-    //   setFilteredData(newFilter);
-
-    // } else if(category === "" && searchWord !=""){
-    //   const newFilter = data.filter((value) => {
-    //     return value.category.toLowerCase().includes(searchWord.toLowerCase());
-    //   });
-    //   setFilteredData(newFilter);
-
-    // } else{
-    //   const newFilter = data.filter((value) => {
-    //     return value.category.toLowerCase().includes(category.toLowerCase());
-    //   });
-    //   const newFilter1 = newFilter.filter((value) => {
-    //     return value.category.toLowerCase().includes(searchWord.toLowerCase());
-    //   });
-    //   setFilteredData(newFilter1);
-    // }
   };
 
   const priceFilter = ({ event }) => {
-    //get user input from search bar
     console.log("min: " + minVal);
     console.log("max: " + maxVal);
     const newFilter = filteredData.filter((value) => {
-      return value.rent >= minVal && value.rent <= maxVal;
+      return value.rent_price >= minVal && value.rent_price <= maxVal;
     });
     setFilteredData(newFilter);
   };
@@ -251,7 +200,6 @@ function SearchBar({ placeholder, data }) {
             onChange={({ min, max, data }) => {
               setMinVal(min);
               setMaxVal(max);
-              // setFilteredData(data);
               console.log(
                 `min = ${min}, max = ${max}, data=${data},cate=${category},word=${wordEntered}`
               );
@@ -260,7 +208,6 @@ function SearchBar({ placeholder, data }) {
         </div>
       </div>
 
-      {/* </div> */}
       {filteredData.length != 0 && (
         <div className="wrapper">
           {filteredData.slice(0, 15).map((value, key) => {
