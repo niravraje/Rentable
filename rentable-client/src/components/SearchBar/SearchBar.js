@@ -46,7 +46,7 @@
 
 // 31st Oct 2021
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./SearchBar.css";
 
 //npm install @material-ui/core
@@ -61,10 +61,25 @@ function SearchBar({ placeholder, data }) {
   const [category, setCategory] = useState("Apartment");
   const [minVal, setMinVal] = useState(0);
   const [maxVal, setMaxVal] = useState(10000);
-  const initalData = data.filter((value) => {
-    return value.category.toLowerCase().includes(category.toLowerCase());
-  });
-  const [filteredData, setFilteredData] = useState(initalData);
+  const [filteredData, setFilteredData] = useState(
+    data.filter((value) => {
+      return value.category.toLowerCase().includes(category.toLowerCase());
+    })
+  );
+
+  // useEffect(() => {
+  //   const f = data.filter((value) => {
+  //     return value.category.toLowerCase().includes(category.toLowerCase());
+  //   });
+  //   setFilteredData(
+  //     data.filter((value) => {
+  //       return value.category.toLowerCase().includes(category.toLowerCase());
+  //     })
+  //   );
+  //   return;
+  // }, []);
+
+  console.log("filtered data: " + filteredData);
 
   const cateFilter = (event) => {
     //get user input from search bar
@@ -74,7 +89,11 @@ function SearchBar({ placeholder, data }) {
     console.log(category);
 
     if (searchCate === "") {
-      setFilteredData(initalData);
+      setFilteredData(
+        data.filter((value) => {
+          return value.category.toLowerCase().includes(category.toLowerCase());
+        })
+      );
     } else {
       const newFilter = data.filter((value) => {
         return (
@@ -168,7 +187,11 @@ function SearchBar({ placeholder, data }) {
   };
 
   const clearInput = () => {
-    setFilteredData([]);
+    setFilteredData(
+      data.filter((value) => {
+        return value.category.toLowerCase().includes(category.toLowerCase());
+      })
+    );
     setWordEntered("");
   };
 
@@ -260,7 +283,8 @@ function SearchBar({ placeholder, data }) {
         </div>
       </div>
 
-      {/* </div> */}
+      {/* <h1>Hello</h1>
+      <h5>{filteredData.length}</h5> */}
       {filteredData.length != 0 && (
         <div className="wrapper">
           {filteredData.slice(0, 15).map((value, key) => {
