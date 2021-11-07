@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 // import { BrowserRouter as Router, Switch, Route} from "react-router-dom"
 import GoogleLogin from "react-google-login";
+import * as API from "../constants/api-routes";
 import { Link, Redirect } from "react-router-dom";
 
 const responseGoogle = (response) => {
@@ -42,7 +43,7 @@ const OwnerSignIn = (props) => {
     };
     try {
       console.log(requestOptions);
-      const res = await fetch("/sign_in", requestOptions);
+      const res = await fetch(API.SIGNIN, requestOptions);
       console.log("Response on sign_in request: " + res);
       const data = await res.json();
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import * as API from "../constants/api-routes";
 import { FaBorderNone } from "react-icons/fa";
 
 const OwnerSignUp = (props) => {
@@ -32,7 +33,7 @@ const OwnerSignUp = (props) => {
     };
     try {
       console.log(requestOptions);
-      const res = await fetch("/register", requestOptions);
+      const res = await fetch(API.REGISTER, requestOptions);
       console.log(res);
       const data = await res.json();
       console.log("Registration response token: " + data);

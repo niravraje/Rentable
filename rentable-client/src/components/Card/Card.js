@@ -33,7 +33,7 @@ const Card = ({ card }) => {
         <h2 className="title"> {card.title} </h2>
         <p className="description">
           {card.description}
-          <br />${card.rent}
+          <br />${card.rent_price}
           <br />4 stars
           <br />
           Bloomington

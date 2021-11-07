@@ -79,8 +79,8 @@ function SearchBar({ placeholder, data }) {
       const newFilter = data.filter((value) => {
         return (
           value.category.toLowerCase().includes(searchCate.toLowerCase()) &&
-          value.rent >= minVal &&
-          value.rent <= maxVal
+          value.rent_price >= minVal &&
+          value.rent_price <= maxVal
         );
       });
       setFilteredData(newFilter);
@@ -125,8 +125,8 @@ function SearchBar({ placeholder, data }) {
       return (
         value.category.toLowerCase().includes(category.toLowerCase()) &&
         value.title.toLowerCase().includes(searchWord.toLowerCase()) &&
-        value.rent >= minVal &&
-        value.rent <= maxVal
+        value.rent_price >= minVal &&
+        value.rent_price <= maxVal
       );
     });
     setFilteredData(newFilter);
@@ -162,7 +162,7 @@ function SearchBar({ placeholder, data }) {
     console.log("min: " + minVal);
     console.log("max: " + maxVal);
     const newFilter = filteredData.filter((value) => {
-      return value.rent >= minVal && value.rent <= maxVal;
+      return value.rent_price >= minVal && value.rent_price <= maxVal;
     });
     setFilteredData(newFilter);
   };
