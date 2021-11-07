@@ -124,7 +124,6 @@ def sign_in():
 @app.route('/get_products', methods=['GET', 'POST'])
 def get_products():
     if request.method == 'GET':
-        # return jsonify({'msg': 'products api'})
         cur = conn.cursor()
 
         query_get_all_products = """SELECT * FROM product"""
@@ -134,6 +133,8 @@ def get_products():
             return jsonify(result)
         else:
             return jsonify({'msg': 'No products found in the database.'}), 404
+    else:
+        return jsonify({'msg': 'Request needs to be a POST request.'})
 
 
 @app.route('/add_new_listing', methods=['GET', 'POST'])
@@ -166,4 +167,4 @@ def add_new_listing():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
