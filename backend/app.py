@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, JWTManager
+from flask_cors import CORS
 import pymysql
 
 conn = pymysql.connect(
@@ -13,6 +14,7 @@ conn = pymysql.connect(
 )
 
 app = Flask(__name__)
+CORS(app)
 
 # --- JWT Initialization ---
 app.config["JWT_SECRET_KEY"] = "rentable"

@@ -74,7 +74,7 @@ function SearchBar({ placeholder, data }) {
     console.log(category);
 
     if (searchCate === "") {
-      setFilteredData([]);
+      setFilteredData(initalData);
     } else {
       const newFilter = data.filter((value) => {
         return (
