@@ -44,7 +44,7 @@
 
 // export default SearchBar;
 
-// 31st Oct 2021
+// 31st Oct 2021, updated
 
 import React, { useState } from "react";
 import "./SearchBar.css";
@@ -74,7 +74,7 @@ function SearchBar({ placeholder, data }) {
     console.log(category);
 
     if (searchCate === "") {
-      setFilteredData([]);
+      setFilteredData(initalData);
     } else {
       const newFilter = data.filter((value) => {
         return (

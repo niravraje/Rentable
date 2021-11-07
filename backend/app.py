@@ -15,7 +15,7 @@ conn = pymysql.connect(
 
 app = Flask(__name__)
 CORS(app)
-
+# n
 # --- JWT Initialization ---
 app.config["JWT_SECRET_KEY"] = "rentable"
 jwt = JWTManager(app)
