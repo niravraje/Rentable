@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import * as API from "../constants/api-routes";
 import { FaBorderNone } from "react-icons/fa";
 
 // const case1 = ({username,password,confirmPassword,email}) =>{
@@ -56,7 +57,7 @@ const Signup = (props) => {
     };
     try {
       console.log(requestOptions);
-      const res = await fetch("/register", requestOptions);
+      const res = await fetch(API.REGISTER, requestOptions);
       // .then((res) => res.json())
       // .then((data) => {
       //   console.log(data);

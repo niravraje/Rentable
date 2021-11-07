@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import OwnerDashboardList from "../components/OwnerDashboardList";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
+import * as API from "../constants/api-routes";
 import Button from "react-bootstrap/Button";
 
 const OwnerAddNewListing = () => {
@@ -36,7 +37,7 @@ const OwnerAddNewListing = () => {
     console.log(requestOptions);
 
     try {
-      const res = await fetch("/add_new_listing", requestOptions);
+      const res = await fetch(API.ADD_NEW_LISTING, requestOptions);
       console.log("Response on add_new_listing request: " + res);
       const data = await res.json();
 

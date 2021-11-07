@@ -50,6 +50,7 @@ import JSONDATAx from "../Data2.json";
 import "../style/searchBarDiv.css";
 import { useState, useEffect } from "react";
 import SearchBar from "../components/SearchBar/SearchBar.js";
+import * as API from "../constants/api-routes";
 // import org.json.simple.*;
 
 const Home = () => {
@@ -77,10 +78,7 @@ const Home = () => {
         headers: { "Content-Type": "application/json" },
       };
       try {
-        const res = await fetch(
-          "https://rentable1-api.herokuapp.com/get_products",
-          requestOptions
-        );
+        const res = await fetch(API.GET_PRODUCTS, requestOptions);
         console.log("Response on get_products request: " + res);
         const data = await res.json();
 
