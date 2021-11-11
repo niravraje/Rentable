@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, JWTManager
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import pymysql
 
 conn = pymysql.connect(
@@ -15,10 +15,24 @@ conn = pymysql.connect(
 
 app = Flask(__name__)
 CORS(app)
-# nn
+# app.config['CORS_HEADERS'] = 'Content-Type'
+# app.config['CORS_SUPPORTS_CREDENTIALS'] = True
+# n
 # --- JWT Initialization ---
 app.config["JWT_SECRET_KEY"] = "rentable"
 jwt = JWTManager(app)
+
+
+# @app.after_request
+# def after_request(response):
+#     response.headers.add('Access-Control-Allow-Origin',
+#                          'https://rentable1.herokuapp.com')
+#     response.headers.add('Access-Control-Allow-Headers',
+#                          'Content-Type,Authorization')
+#     response.headers.add('Access-Control-Allow-Methods',
+#                          'GET,PUT,POST,DELETE,OPTIONS')
+#     response.headers.add('Access-Control-Allow-Credentials', 'true')
+# return response
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -39,6 +53,7 @@ def get_unique_id(table_name):
 
 
 @app.route('/register', methods=['GET', 'POST'])
+@cross_origin()
 def register():
     if request.method == 'POST':
         email = request.json.get('email')
@@ -84,12 +99,13 @@ def register():
 
         access_token = create_access_token(identity=email)
 
-        return jsonify(access_token=access_token), 201
+        return jsonify(access_token=access_token)
     else:
-        return jsonify(({'msg': 'HTTP method must be POST'})), 405
+        return jsonify(({'msg': 'HTTP method must be POST'}))
 
 
 @app.route('/sign_in', methods=['GET', 'POST'])
+@cross_origin()
 def sign_in():
     if request.method == 'POST':
         email = request.json.get('email')
@@ -106,15 +122,15 @@ def sign_in():
             fetched_password = result.get('password')
             fetched_user_type = result.get('user_type')
         else:
-            return jsonify({'msg': 'User not found.'}), 404
+            return jsonify({'msg': 'User not found.'})
 
         # Manual login
         if login_type == 'manual':
             if check_password_hash(fetched_password, password) and user_type == fetched_user_type:
                 access_token = create_access_token(identity=email)
-                return jsonify(access_token=access_token), 202
+                return jsonify(access_token=access_token), 200
             else:
-                return jsonify({'msg': 'Login failed'}), 401
+                return jsonify({'msg': 'Login failed'})
 
         # Google OAuth login
 
@@ -122,6 +138,7 @@ def sign_in():
 
 
 @app.route('/get_products', methods=['GET', 'POST'])
+@cross_origin()
 def get_products():
     if request.method == 'GET':
         cur = conn.cursor()
