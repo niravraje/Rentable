@@ -29,7 +29,7 @@ const Card = ({ card }) => {
   return (
     <Link to="/product-details">
       <div className="card" style={{ cursor: "pointer" }}>
-        <img className="image" src={card.image} alt="product image" />
+        <img className="image" src={card.image_url} alt="product image" />
         <h2 className="title"> {card.title} </h2>
         <p className="description">
           {card.description}

@@ -3,6 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import GoogleLogin from "react-google-login";
 import * as API from "../constants/api-routes";
 import Form from "react-bootstrap/Form";
+import { CropSharp } from "@material-ui/icons";
 
 // const case1 = ({username,password}) =>{
 //     return new Promise((resolve, reject) =>{
@@ -62,6 +63,7 @@ const Signin = (props) => {
       console.log("Status code of login request: " + res.status);
       console.log("Login request's res.json(): " + JSON.stringify(data));
       console.log("Access token received on login: " + data.access_token);
+      console.log("Username of user logged in: " + data.username);
 
       if (res.status === 401) {
         setError("Unauthorized. Invalid username or password.");
@@ -75,7 +77,7 @@ const Signin = (props) => {
       setIsLoading(false);
       console.log("props.handleLogin: " + props.handleLogin);
       console.log("Before setting login status: " + props.loginStatus);
-      props.handleLogin();
+      props.handleLogin(data.username);
 
       console.log("props.handleLogin() executed...");
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FaBorderNone } from "react-icons/fa";
 import * as API from "../constants/api-routes";
 
@@ -77,7 +77,7 @@ const Signup = (props) => {
       console.log(
         "Signup.js: Before setting login status: " + props.loginStatus
       );
-      props.handleLogin();
+      props.handleLogin(data.username);
       console.log(
         "Signup.js: Before setting login status: " + props.loginStatus
       );

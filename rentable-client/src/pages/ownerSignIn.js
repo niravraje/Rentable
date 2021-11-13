@@ -63,7 +63,7 @@ const OwnerSignIn = (props) => {
       //   setIsLogin(true);
       console.log("props.handleLogin: " + props.handleLogin);
       console.log("Before setting login status: " + props.loginStatus);
-      props.handleLogin();
+      props.handleLogin(data.username);
       console.log("props.handleLogin() executed...");
 
       console.log("User authenticated successfully");

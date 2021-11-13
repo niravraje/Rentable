@@ -32,9 +32,17 @@ function App() {
       ? sessionStorage.getItem("user_type")
       : ""
   );
+  const [username, setUsername] = useState(
+    sessionStorage.getItem("username") &&
+      sessionStorage.getItem("username") !== ""
+      ? sessionStorage.getItem("username")
+      : ""
+  );
 
-  const handleLogin = () => {
+  const handleLogin = (usernameValue) => {
     setLoginStatus(true);
+    setUsername(usernameValue);
+    sessionStorage.setItem("username", usernameValue);
   };
 
   const handleLogout = () => {

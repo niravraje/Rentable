@@ -290,7 +290,7 @@ function SearchBar({ placeholder, data }) {
           {filteredData.slice(0, 15).map((value, key) => {
             return (
               <div>
-                <a className="dataItem" href={value.image} target="_blank">
+                <a className="dataItem" href={value.image_url} target="_blank">
                   <Cards card={value} />
                 </a>
               </div>

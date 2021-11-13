@@ -17,7 +17,7 @@ conn = pymysql.connect(
 UPLOAD_FOLDER = 'backend/files'
 
 app = Flask(__name__)
-CORS(app)
+# CORS(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # --- JWT Initialization ---
@@ -37,8 +37,8 @@ jwt = JWTManager(app)
 
 def get_unique_id(table_name):
     cur = conn.cursor()
-    query = """SELECT count(*) AS row_count FROM %s"""
-    if cur.execute(query, table_name):
+    query = "SELECT count(*) AS row_count FROM " + str(table_name)
+    if cur.execute(query):
         result = cur.fetchone()
         row_count = result.get('row_count')
         row_count += 1
@@ -93,7 +93,7 @@ def register():
 
         access_token = create_access_token(identity=email)
 
-        return jsonify(access_token=access_token), 201
+        return jsonify(access_token=access_token, username=username), 201
     else:
         return jsonify(({'msg': 'HTTP method must be POST'})), 405
 
@@ -117,11 +117,20 @@ def sign_in():
         else:
             return jsonify({'msg': 'User not found.'}), 404
 
+        # Retrieve username
+        cur = conn.cursor()
+        query_find_user = """SELECT * FROM user WHERE email = %s"""
+        if cur.execute(query_find_user, email):
+            result = cur.fetchone()
+            fetched_username = result.get('username')
+        else:
+            return jsonify({'msg': 'User not found.'}), 404
+
         # Manual login
         if login_type == 'manual':
             if check_password_hash(fetched_password, password) and user_type == fetched_user_type:
                 access_token = create_access_token(identity=email)
-                return jsonify(access_token=access_token), 202
+                return jsonify(access_token=access_token, username=fetched_username), 202
             else:
                 return jsonify({'msg': 'Login failed'}), 401
 
@@ -148,17 +157,12 @@ def get_products():
 def upload_image():
     if request.method == 'POST':
         target_folder = "images"
-        file = request.files['new_filename']
-        return file.filename
-        return request.files['new_filename']
-        # print("new_filename: ", request.files['new_filename'])
-        # # filename = secure_filename(file.filename)
-        # filename = secure_filename(request.files['new_filename'])
-        # print("filename: ", filename)
-        # file_path = os.path.join(
-        #     app.config['UPLOAD_FOLDER'], target_folder, filename)
-        # file.save(file_path)
-        # return "file uploaded"
+        file = request.files['file']
+        filename = secure_filename(request.form['new_filename'])
+        file_path = os.path.join(
+            app.config['UPLOAD_FOLDER'], target_folder, filename)
+        file.save(file_path)
+        return "file uploaded"
 
 
 @app.route('/add_new_listing', methods=['GET', 'POST'])
@@ -170,24 +174,32 @@ def add_new_listing():
         rent_frequency = request.json.get('rent_frequency')
         description = request.json.get('description')
         owner_username = request.json.get('owner_username')
-        image_file = request.json.get('image_file')
+        image_url = request.json.get('image_url')
         approval_status = 0
 
-        # new_product_id = get_unique_id('product')
-        cur = conn.cursor()
-        query = """SELECT count(*) AS row_count FROM product"""
-        new_product_id = 0
-        if cur.execute(query):
-            result = cur.fetchone()
-            row_count = result.get('row_count')
-            new_product_id = row_count + 1
+        new_product_id = get_unique_id('product')
+        # cur = conn.cursor()
+        # query = """SELECT count(*) AS row_count FROM product"""
+        # new_product_id = 0
+        # if cur.execute(query):
+        #     result = cur.fetchone()
+        #     row_count = result.get('row_count')
+        #     new_product_id = row_count + 1
 
-        query_insert_listing = """INSERT INTO product(id, approval_status, category, title, rent_price, rent_frequency, description, owner_username) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)"""
+        print("Category: " + category)
+        query_insert_listing = """INSERT INTO product(id, approval_status, category, title, rent_price, rent_frequency, description, owner_username, image_url) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 
         cur = conn.cursor()
         cur.execute(query_insert_listing, (new_product_id, approval_status, category, title,
-                    rent_price, rent_frequency, description, owner_username))
+                    rent_price, rent_frequency, description, owner_username, image_url))
         conn.commit()
+
+        # new_image_id = get_unique_id("product_image")
+        # cur = conn.cursor()
+        # query_insert_image_url = """INSERT INTO product_image(image_id, image_url, product_id) VALUES (%s, %s, %s)"""
+        # cur.execute(query_insert_image_url,
+        #             (new_image_id, image_url, new_product_id))
+        # conn.commit()
         return jsonify({'msg': 'Listing added successfully', 'product_id': new_product_id})
 
 

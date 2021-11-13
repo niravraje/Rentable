@@ -44,7 +44,7 @@ const OwnerSignUp = (props) => {
       console.log(
         "Signup.js: Before setting login status: " + props.loginStatus
       );
-      props.handleLogin();
+      props.handleLogin(data.username);
       console.log(
         "Signup.js: Before setting login status: " + props.loginStatus
       );
