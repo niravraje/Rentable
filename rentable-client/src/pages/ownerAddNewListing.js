@@ -14,6 +14,7 @@ const OwnerAddNewListing = () => {
   const [rentPrice, setRentPrice] = useState("");
   const [rentFrequency, setRentFrequency] = useState("");
   const [ownerUsername, setOwnerUsername] = useState("niravraje2");
+  const [imageFile, setImageFile] = useState(null);
 
   // const [isLoading, setIsLoading] = useState(false);
 
@@ -21,22 +22,24 @@ const OwnerAddNewListing = () => {
     e.preventDefault();
 
     let userTypeLocal = sessionStorage.getItem("user_type");
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        category: category,
-        title: title,
-        description: description,
-        rent_price: rentPrice,
-        rent_frequency: rentFrequency,
-        owner_username: ownerUsername,
-      }),
-    };
     console.log("User type: " + userTypeLocal);
-    console.log(requestOptions);
+    console.log(imageFile);
 
     try {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          category: category,
+          title: title,
+          description: description,
+          rent_price: rentPrice,
+          rent_frequency: rentFrequency,
+          owner_username: ownerUsername,
+        }),
+      };
+
+      console.log(requestOptions);
       const res = await fetch(API.ADD_NEW_LISTING, requestOptions);
       console.log("Response on add_new_listing request: " + res);
       const data = await res.json();
@@ -44,7 +47,7 @@ const OwnerAddNewListing = () => {
       console.log("Status code of request: " + res.status);
       console.log("res.json(): " + JSON.stringify(data));
 
-      if (res.status !== 201) {
+      if (res.status !== 200) {
         setError("Error: Could not create the new listing.");
         return;
       }
@@ -53,6 +56,26 @@ const OwnerAddNewListing = () => {
     } catch (err) {
       setError("Error. Internal server error.");
       console.log("Server error occurred. Check if the server is running.");
+    }
+
+    // Image Upload Handling
+    const dataArray = new FormData();
+    dataArray.append("file", imageFile);
+    dataArray.append("new_filename", "new_filename");
+
+    try {
+      const requestOptions2 = {
+        method: "POST",
+        body: dataArray,
+      };
+      console.log("dataArray: " + dataArray);
+      const res2 = await fetch(API.UPLOAD_IMAGE, requestOptions2);
+      console.log(res2);
+    } catch (err) {
+      setError("Error while uploading file.");
+      console.log(
+        "Server error occurred while uploading the file. Check if the server is running."
+      );
     }
 
     setCategory("");
@@ -151,7 +174,10 @@ const OwnerAddNewListing = () => {
           <div className="mb-3">
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>Upload Photo</Form.Label>
-              <Form.Control type="file" />
+              <Form.Control
+                type="file"
+                onChange={(e) => setImageFile(e.target.files[0])}
+              />
             </Form.Group>
           </div>
           <div className="mb-3">

@@ -1,5 +1,7 @@
+import os
 from flask import Flask, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from flask_jwt_extended import create_access_token, JWTManager
 from flask_cors import CORS
 import pymysql
@@ -12,13 +14,25 @@ conn = pymysql.connect(
     charset='utf8mb4',
     cursorclass=pymysql.cursors.DictCursor
 )
+UPLOAD_FOLDER = 'backend/files'
 
 app = Flask(__name__)
 CORS(app)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # --- JWT Initialization ---
 app.config["JWT_SECRET_KEY"] = "rentable"
 jwt = JWTManager(app)
+
+
+# @app.after_request
+# def after_request(response):
+#     response.headers.add('Access-Control-Allow-Origin', '*')
+#     response.headers.add('Access-Control-Allow-Headers',
+#                          'Content-Type, Authorization')
+#     response.headers.add('Access-Control-Allow-Methods',
+#                          'GET,PUT,POST,DELETE,OPTIONS')
+#     return response
 
 
 def get_unique_id(table_name):
@@ -130,6 +144,23 @@ def get_products():
             return jsonify({'msg': 'No products found in the database.'}), 404
 
 
+@app.route('/upload_image', methods=['GET', 'POST'])
+def upload_image():
+    if request.method == 'POST':
+        target_folder = "images"
+        file = request.files['new_filename']
+        return file.filename
+        return request.files['new_filename']
+        # print("new_filename: ", request.files['new_filename'])
+        # # filename = secure_filename(file.filename)
+        # filename = secure_filename(request.files['new_filename'])
+        # print("filename: ", filename)
+        # file_path = os.path.join(
+        #     app.config['UPLOAD_FOLDER'], target_folder, filename)
+        # file.save(file_path)
+        # return "file uploaded"
+
+
 @app.route('/add_new_listing', methods=['GET', 'POST'])
 def add_new_listing():
     if request.method == 'POST':
@@ -139,6 +170,7 @@ def add_new_listing():
         rent_frequency = request.json.get('rent_frequency')
         description = request.json.get('description')
         owner_username = request.json.get('owner_username')
+        image_file = request.json.get('image_file')
         approval_status = 0
 
         # new_product_id = get_unique_id('product')
@@ -156,7 +188,7 @@ def add_new_listing():
         cur.execute(query_insert_listing, (new_product_id, approval_status, category, title,
                     rent_price, rent_frequency, description, owner_username))
         conn.commit()
-        return jsonify({'msg': 'Listing added successfully'}), 201
+        return jsonify({'msg': 'Listing added successfully', 'product_id': new_product_id})
 
 
 if __name__ == '__main__':
