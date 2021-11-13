@@ -17,7 +17,7 @@ app = Flask(__name__)
 CORS(app)
 # app.config['CORS_HEADERS'] = 'Content-Type'
 # app.config['CORS_SUPPORTS_CREDENTIALS'] = True
-# n
+# nn
 # --- JWT Initialization ---
 app.config["JWT_SECRET_KEY"] = "rentable"
 jwt = JWTManager(app)
