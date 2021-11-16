@@ -11,9 +11,6 @@ const AdminDashboard = () => {
     >
       <div className="card-body">
         <h1 className="card-title"></h1>
-        <Link to="/admin-refund" className="btn btn-primary w-100 menu-buttons">
-          Issue a Refund
-        </Link>
         <Link
           to="/admin-approve-listings"
           className="btn btn-primary w-100 menu-buttons"
@@ -21,10 +18,10 @@ const AdminDashboard = () => {
           Approve Listings
         </Link>
         <Link
-          to="/view-owner-orders"
+          to="/admin-complaints"
           className="btn btn-primary w-100 menu-buttons"
         >
-          View Orders
+          View Complaints
         </Link>
         <Link
           to="/admin-messages"

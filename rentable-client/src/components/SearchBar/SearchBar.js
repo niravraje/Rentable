@@ -1,51 +1,3 @@
-// import React, { useState } from "react";
-// import "./SearchBar.css";
-// import SearchIcon from "@material-ui/icons/Search";
-// import CloseIcon from "@material-ui/icons/Close";
-// import CardPage from "../Card/CardPage.js";
-
-// function SearchBar({ placeholder, filterCards, displayAllCards }) {
-//   const [wordEntered, setWordEntered] = useState("");
-
-//   const updateCards = () => {
-//     displayAllCards();
-//   };
-
-//   const handleFilter = (event) => {
-//     const searchWord = event.target.value;
-//     setWordEntered(searchWord);
-//     filterCards(wordEntered);
-//   };
-
-//   const clearInput = () => {
-//     setWordEntered("");
-//   };
-
-//   return (
-//     <div className="search">
-//       <div className="searchInputs">
-//         <input
-//           type="text"
-//           placeholder={placeholder}
-//           value={wordEntered}
-//           onChange={handleFilter}
-//         />
-//         <div className="searchIcon">
-//           {wordEntered.length === 0 ? (
-//             updateCards(<SearchIcon />)
-//           ) : (
-//             <CloseIcon id="clearBtn" onClick={clearInput} />
-//           )}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default SearchBar;
-
-// 31st Oct 2021
-
 import React, { useState, useEffect } from "react";
 import "./SearchBar.css";
 
@@ -53,7 +5,7 @@ import "./SearchBar.css";
 import SearchIcon from "@material-ui/icons/Search";
 //npm install @material-ui/icons
 import CloseIcon from "@material-ui/icons/Close";
-import Cards from "../Card/Card.js";
+import Card from "../Card/Card.js";
 import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
 
 function SearchBar({ placeholder, data }) {
@@ -66,18 +18,6 @@ function SearchBar({ placeholder, data }) {
       return value.category.toLowerCase().includes(category.toLowerCase());
     })
   );
-
-  // useEffect(() => {
-  //   const f = data.filter((value) => {
-  //     return value.category.toLowerCase().includes(category.toLowerCase());
-  //   });
-  //   setFilteredData(
-  //     data.filter((value) => {
-  //       return value.category.toLowerCase().includes(category.toLowerCase());
-  //     })
-  //   );
-  //   return;
-  // }, []);
 
   console.log("filtered data: " + filteredData);
 
@@ -104,31 +44,6 @@ function SearchBar({ placeholder, data }) {
       });
       setFilteredData(newFilter);
     }
-
-    // if (searchCate === "" && wordEntered ==="") {
-    //   setFilteredData([]);
-
-    // }else if(wordEntered != "" && searchCate===""){
-    //   const newFilter = data.filter((value) => {
-    //     return value.category.toLowerCase().includes(wordEntered.toLowerCase());
-    //   });
-    //   setFilteredData(newFilter);
-
-    // }else if(wordEntered === "" && searchCate!=""){
-    //   const newFilter = data.filter((value) => {
-    //     return value.category.toLowerCase().includes(searchCate.toLowerCase());
-    //   });
-    //   setFilteredData(newFilter);
-
-    // }else{
-    //   const newFilter = data.filter((value) => {
-    //     return value.category.toLowerCase().includes(searchCate.toLowerCase());
-    //   });
-    //   const newFilter1 = newFilter.filter((value) => {
-    //     return value.category.toLowerCase().includes(wordEntered.toLowerCase());
-    //   });
-    //   setFilteredData(newFilter1);
-    // }
   };
 
   const handleFilter = (event) => {
@@ -147,41 +62,6 @@ function SearchBar({ placeholder, data }) {
         value.rent_price >= minVal &&
         value.rent_price <= maxVal
       );
-    });
-    setFilteredData(newFilter);
-
-    // if (searchWord === "" && category === "") {
-    //   setFilteredData([]);
-
-    // } else if(category != "" && searchWord===""){
-    //   const newFilter = data.filter((value) => {
-    //     return value.category.toLowerCase().includes(category.toLowerCase());
-    //   });
-    //   setFilteredData(newFilter);
-
-    // } else if(category === "" && searchWord !=""){
-    //   const newFilter = data.filter((value) => {
-    //     return value.category.toLowerCase().includes(searchWord.toLowerCase());
-    //   });
-    //   setFilteredData(newFilter);
-
-    // } else{
-    //   const newFilter = data.filter((value) => {
-    //     return value.category.toLowerCase().includes(category.toLowerCase());
-    //   });
-    //   const newFilter1 = newFilter.filter((value) => {
-    //     return value.category.toLowerCase().includes(searchWord.toLowerCase());
-    //   });
-    //   setFilteredData(newFilter1);
-    // }
-  };
-
-  const priceFilter = ({ event }) => {
-    //get user input from search bar
-    console.log("min: " + minVal);
-    console.log("max: " + maxVal);
-    const newFilter = filteredData.filter((value) => {
-      return value.rent_price >= minVal && value.rent_price <= maxVal;
     });
     setFilteredData(newFilter);
   };
@@ -283,15 +163,13 @@ function SearchBar({ placeholder, data }) {
         </div>
       </div>
 
-      {/* <h1>Hello</h1>
-      <h5>{filteredData.length}</h5> */}
       {filteredData.length != 0 && (
         <div className="wrapper">
           {filteredData.slice(0, 15).map((value, key) => {
             return (
               <div>
-                <a className="dataItem" href={value.image_url} target="_blank">
-                  <Cards card={value} />
+                <a className="dataItem" target="_blank">
+                  <Card card={value} />
                 </a>
               </div>
             );

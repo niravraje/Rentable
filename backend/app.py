@@ -153,6 +153,21 @@ def get_products():
             return jsonify({'msg': 'No products found in the database.'}), 404
 
 
+@app.route('/get_filtered_products', methods=['GET', 'POST'])
+def get_filtered_products():
+    if request.method == 'POST':
+        approval_filter = request.json.get("approval_filter")
+        cur = conn.cursor()
+
+        query_get_all_products = """SELECT * FROM product WHERE approval_status = %s"""
+        if cur.execute(query_get_all_products, (approval_filter)):
+            result = cur.fetchall()
+            print('result: ', result)
+            return jsonify(result)
+        else:
+            return jsonify({'msg': 'No products found in the database.'}), 404
+
+
 @app.route('/upload_image', methods=['GET', 'POST'])
 def upload_image():
     if request.method == 'POST':
@@ -165,6 +180,34 @@ def upload_image():
         return "file uploaded"
 
 
+@app.route('/approve_listing', methods=['GET', 'POST'])
+def approve_listing():
+    if request.method == 'POST':
+        product_id = request.json.get('id')
+
+        query_update_approval_status = """UPDATE product SET approval_status = 1 WHERE id = %s"""
+
+        cur = conn.cursor()
+        cur.execute(query_update_approval_status, (product_id))
+        conn.commit()
+
+        return jsonify({"msg": "product approved", "product_id": product_id})
+
+
+@app.route('/deny_listing', methods=['GET', 'POST'])
+def deny_listing():
+    if request.method == 'POST':
+        product_id = request.json.get('id')
+
+        query_update_approval_status = """UPDATE product SET approval_status = -1 WHERE id = %s"""
+
+        cur = conn.cursor()
+        cur.execute(query_update_approval_status, (product_id))
+        conn.commit()
+
+        return jsonify({"msg": "product approval denied", "product_id": product_id})
+
+
 @app.route('/add_new_listing', methods=['GET', 'POST'])
 def add_new_listing():
     if request.method == 'POST':
@@ -174,6 +217,7 @@ def add_new_listing():
         rent_frequency = request.json.get('rent_frequency')
         description = request.json.get('description')
         owner_username = request.json.get('owner_username')
+        product_location = request.json.get('product_location')
         image_url = request.json.get('image_url')
         approval_status = 0
 
@@ -187,11 +231,11 @@ def add_new_listing():
         #     new_product_id = row_count + 1
 
         print("Category: " + category)
-        query_insert_listing = """INSERT INTO product(id, approval_status, category, title, rent_price, rent_frequency, description, owner_username, image_url) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+        query_insert_listing = """INSERT INTO product(id, approval_status, category, title, rent_price, rent_frequency, description, owner_username, product_location, image_url) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 
         cur = conn.cursor()
         cur.execute(query_insert_listing, (new_product_id, approval_status, category, title,
-                    rent_price, rent_frequency, description, owner_username, image_url))
+                    rent_price, rent_frequency, description, owner_username, product_location, image_url))
         conn.commit()
 
         # new_image_id = get_unique_id("product_image")

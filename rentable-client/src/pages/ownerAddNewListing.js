@@ -13,6 +13,7 @@ const OwnerAddNewListing = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [rentPrice, setRentPrice] = useState("");
+  const [productLocation, setProductLocation] = useState("");
   const [rentFrequency, setRentFrequency] = useState("");
   const [imageSelected, setImageSelected] = useState(null);
 
@@ -85,6 +86,7 @@ const OwnerAddNewListing = () => {
           rent_frequency: rentFrequency,
           owner_username: sessionStorage.getItem("username"),
           image_url: imageUrl,
+          product_location: productLocation,
         };
         console.log(requestOptions);
         Axios.post(API.ADD_NEW_LISTING, requestOptions);
@@ -93,21 +95,6 @@ const OwnerAddNewListing = () => {
         console.log("Flask Response for Add New Listing");
         console.log(response);
       });
-
-    // try {
-    //   const requestOptions2 = {
-    //     method: "POST",
-    //     body: dataArray,
-    //   };
-    //   console.log("dataArray: " + dataArray);
-    //   const res2 = await fetch(API.UPLOAD_IMAGE, requestOptions2);
-    //   console.log(res2);
-    // } catch (err) {
-    //   setError("Error while uploading file.");
-    //   console.log(
-    //     "Server error occurred while uploading the file. Check if the server is running."
-    //   );
-    // }
 
     setImageSelected(null);
     setCategory("");
@@ -201,6 +188,18 @@ const OwnerAddNewListing = () => {
               id="ListingTitle"
               value={rentPrice}
               onChange={(e) => setRentPrice(e.currentTarget.value)}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="listingTitle" className="form-label">
+              Location
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="ListingTitle"
+              value={productLocation}
+              onChange={(e) => setProductLocation(e.currentTarget.value)}
             />
           </div>
           <div className="mb-3">

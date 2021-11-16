@@ -1,50 +1,3 @@
-// import React, { useState } from "react";
-// import JSONDATA from "../Data1.json";
-// import "../style/searchBarDiv.css";
-// import CardPage from "../components/Card/CardPage";
-// import SearchBar from "../components/SearchBar/SearchBar.js";
-
-// const Home = () => {
-//   // example Cards
-//   const [cards, setCards] = useState(JSONDATA);
-
-//   // click on a Card
-//   const cardOnClick = (id) => {
-//     console.log(id, " was clicked");
-//   };
-
-//   // filter cards using the SearchBar
-//   const filterCards = (filter) => {
-//     setCards(
-//       JSONDATA.filter((object) => {
-//         return object.title.toLowerCase().includes(filter.toLowerCase());
-//       })
-//     );
-//   };
-
-//   // Display all cards
-//   const displayAllCards = () => {
-//     setCards(JSONDATA);
-//   };
-
-//   return (
-//     <div className="body">
-//       <div className="search-bar-div">
-//         <SearchBar
-//           placeholder="Search..."
-//           filterCards={filterCards}
-//           displayAllCards={displayAllCards}
-//         />
-//       </div>
-//       <div className="wrapper">
-//         <CardPage cards={cards} cardOnClick={cardOnClick} />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Home;
-
 import React from "react";
 import JSONDATAx from "../Data2.json";
 import "../style/searchBarDiv.css";
@@ -66,20 +19,23 @@ const Home = () => {
       owner_username: "niravraje2",
       rent_frequency: "day",
       rent_price: "110",
-      title: "Tesla",
+      title: "default",
     },
   ]);
 
   useEffect(() => {
     console.log("useEffect triggered");
-    const get_products = async (e) => {
+    const get_filtered_products = async (e) => {
       const requestOptions = {
-        method: "GET",
+        method: "POST",
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          approval_filter: 1,
+        }),
       };
       try {
-        const res = await fetch(API.GET_PRODUCTS, requestOptions);
-        console.log("Response on get_products request: " + res);
+        const res = await fetch(API.GET_FILTERED_PRODUCTS, requestOptions);
+        console.log("Response on get_filtered_products request: " + res);
         const data = await res.json();
 
         console.log("res -> data = " + data);
@@ -106,7 +62,7 @@ const Home = () => {
         console.log("Server error occurred. Check if the server is running.");
       }
     };
-    get_products();
+    get_filtered_products();
   }, []);
 
   return (

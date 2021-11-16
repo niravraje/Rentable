@@ -1,0 +1,90 @@
+.productImage {
+  object-fit: cover;
+  border-radius: 8px;
+  height: 100%;
+  width: 100%;
+}
+
+.productImageContainer {
+  height: 30rem;
+  width: 30rem;
+  float: left;
+  position: relative;
+  margin: 30px;
+}
+
+.productImagePriceOverlay {
+  background-color: maroon;
+  color: white;
+  opacity: 0.8;
+  font-weight: bold;
+  vertical-align: bottom;
+  bottom: 30px;
+  text-align: right;
+  font-size: 20px;
+  position: absolute;
+  border-radius: 5px;
+}
+
+.productTopDiv {
+  height: 35rem;
+  max-height: 35rem;
+}
+
+.productDivider {
+  background-color: black;
+  opacity: 0.9;
+  height: 1rem;
+}
+
+.productBackground {
+  background-color: white;
+  min-height: 1000px;
+}
+
+.productInfoBox {
+  background-color: white;
+  margin: 30px;
+  width: 68%;
+  height: 30rem;
+  border-radius: 8px;
+  overflow: auto;
+  margin-left: 35rem;
+  position: absolute;
+}
+
+.productRating {
+  left: 10px;
+  bottom: 10px;
+  background-color: white;
+  border-radius: 4px;
+}
+
+.productTitle {
+  padding: 1rem;
+  color: white;
+}
+
+.productTitleBackground {
+  background-color: black;
+  opacity: 0.9;
+}
+
+.productDescriptionContainer {
+  height: 19rem;
+  font-size: 30px;
+  padding: 10px;
+}
+
+.locationInfo {
+  padding-left: 10px;
+  vertical-align: bottom;
+  font-size: 25px;
+}
+
+.productMapContainer {
+  width: 100%;
+  height: 31rem;
+  justify-content: center;
+  background-color: lightgrey;
+}

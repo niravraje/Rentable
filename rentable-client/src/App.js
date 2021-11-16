@@ -19,6 +19,10 @@ import AdminDashboard from "./pages/adminDashboard";
 import AdminRefund from "./pages/adminRefund";
 import AdminMessages from "./pages/adminMessages";
 import ProductDetails from "./pages/productDetails";
+import EnhancedTable from "./pages/adminApproveListings";
+import Payment from "./pages/productPayment";
+import ProductLodgeComplaint from "./pages/productLodgeComplaint";
+import AdminComplaints from "./pages/adminComplaints";
 
 function App() {
   const [loginStatus, setLoginStatus] = useState(
@@ -158,14 +162,22 @@ function App() {
         />
         <ProtectedRoute
           exact
-          path="/admin-messages"
+          path="/admin-approve-listings"
           loginStatus={loginStatus}
           userType={userType}
-          component={AdminMessages}
+          component={EnhancedTable}
         />
         <Route path="/forgot-password" exact component={ForgotPassword} />
         <Route path="/add-new-listing" exact component={OwnerAddNewListing} />
         <Route path="/product-details" exact component={ProductDetails} />
+        <Route path="/product-payment" exact component={Payment} />
+        <Route path="/admin-complaints" exact component={AdminComplaints} />
+        <Route
+          path="/product-lodge-complaint"
+          exact
+          component={ProductLodgeComplaint}
+        />
+        <Route path="/product-review" exact component={Payment} />
       </Switch>
     </Router>
   );
