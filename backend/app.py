@@ -84,7 +84,7 @@ def register():
 
         # Insert into user table
         cur = conn.cursor()
-        query_insert_user = """INSERT INTO
+        query_insert_user = """INSERT INTO 
         user(username, user_type, first_name, last_name, email)
         VALUES(%s, %s, %s, %s, %s)"""
         cur.execute(query_insert_user, (username, user_type,
