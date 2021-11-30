@@ -222,13 +222,6 @@ def add_new_listing():
         approval_status = 0
 
         new_product_id = get_unique_id('product')
-        # cur = conn.cursor()
-        # query = """SELECT count(*) AS row_count FROM product"""
-        # new_product_id = 0
-        # if cur.execute(query):
-        #     result = cur.fetchone()
-        #     row_count = result.get('row_count')
-        #     new_product_id = row_count + 1
 
         print("Category: " + category)
         query_insert_listing = """INSERT INTO product(id, approval_status, category, title, rent_price, rent_frequency, description, owner_username, product_location, image_url) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
@@ -245,6 +238,47 @@ def add_new_listing():
         #             (new_image_id, image_url, new_product_id))
         # conn.commit()
         return jsonify({'msg': 'Listing added successfully', 'product_id': new_product_id})
+
+
+@app.route('/add_new_complaint', methods=['GET', 'POST'])
+def add_new_complaint():
+    if request.method == 'POST':
+        product_id = request.json.get('product_id')
+        description = request.json.get('description')
+        is_refund_requested = int(request.json.get('is_refund_requested'))
+        renter_username = request.json.get('renter_username')
+        refund_status = 0
+
+        new_complaint_id = get_unique_id('complaint')
+
+        query_insert_listing = """INSERT INTO complaint(complaint_id, product_id, renter_username, description, is_refund_requested, refund_status) VALUES(%s, %s, %s, %s, %s, %s)"""
+
+        cur = conn.cursor()
+        cur.execute(query_insert_listing, (new_complaint_id, product_id, renter_username,
+                    description, is_refund_requested, refund_status))
+        conn.commit()
+
+        return jsonify({'msg': 'Complaint added successfully', 'complaint_id': new_complaint_id})
+
+
+@app.route('/add_new_review', methods=['GET', 'POST'])
+def add_new_review():
+    if request.method == 'POST':
+        product_id = request.json.get('product_id')
+        review_description = request.json.get('review_description')
+        rating_value = request.json.get('rating_value')
+        renter_username = request.json.get('renter_username')
+
+        new_review_id = get_unique_id('product_review')
+
+        query_insert_listing = """INSERT INTO product_review(review_id, product_id, renter_username, review_description, rating_value) VALUES(%s, %s, %s, %s, %s)"""
+
+        cur = conn.cursor()
+        cur.execute(query_insert_listing, (new_review_id, product_id,
+                    renter_username, review_description, rating_value))
+        conn.commit()
+
+        return jsonify({'msg': 'Review added successfully', 'review_id': new_review_id})
 
 
 if __name__ == '__main__':

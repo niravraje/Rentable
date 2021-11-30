@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./SearchBar.css";
+import { useVoice } from "../Voice/useVoice";
+import Mic from "@mui/icons-material/Mic";
 
 //npm install @material-ui/core
 import SearchIcon from "@material-ui/icons/Search";
@@ -75,6 +77,34 @@ function SearchBar({ placeholder, data }) {
     setWordEntered("");
   };
 
+  const { text, isListening, listen, voiceSupported } = useVoice();
+
+  useEffect(() => {
+    if (text !== "") {
+      setWordEntered(text);
+      const newFilter = data.filter((value) => {
+        return (
+          value.category.toLowerCase().includes(category.toLowerCase()) &&
+          value.title.toLowerCase().includes(text.toLowerCase()) &&
+          value.rent_price >= minVal &&
+          value.rent_price <= maxVal
+        );
+      });
+      setFilteredData(newFilter);
+    }
+  }, [text]);
+
+  if (!voiceSupported) {
+    return (
+      <div className="app">
+        <h1>
+          Voice recognition is not supported by your browser, please re-try with
+          a supported browser e.g. Chrome
+        </h1>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="search-bar-div search">
@@ -130,6 +160,13 @@ function SearchBar({ placeholder, data }) {
             </select> */}
         {/* <div className="card card-body"> */}
         <div className="searchInputs">
+          <div className="microphone">
+            <Mic
+              className={`microphone ${isListening && "isListening"}`}
+              onClick={listen}
+              aria-hidden="true"
+            />
+          </div>
           <input
             type="text"
             placeholder={placeholder}

@@ -2,9 +2,11 @@ import React, { useState } from "react";
 // import "../style/Home.css";
 import Paypal from "../components/Paypal/Paypal";
 
-function Payment() {
+function Payment(props) {
   const [checkout, setCheckOut] = useState(false);
-
+  const { state } = props.location;
+  const [productCard, setProductCard] = useState(state);
+  console.log("product card here: " + JSON.stringify(productCard));
   return (
     <div className="App">
       {!checkout ? (
@@ -15,7 +17,7 @@ function Payment() {
             width: "60%",
           }}
         >
-          <Paypal />
+          <Paypal productRentPrice={productCard.rent_price} />
         </div>
       ) : (
         <button

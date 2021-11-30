@@ -1,7 +1,8 @@
 import React, { useRef, useEffect } from "react";
 
-export default function Paypal() {
+export default function Paypal(props) {
   const paypal = useRef();
+  console.log("props: " + JSON.stringify(props));
 
   useEffect(() => {
     window.paypal
@@ -14,7 +15,7 @@ export default function Paypal() {
                 description: "Cool Looking Table",
                 amount: {
                   currency_code: "USD",
-                  value: 50.0,
+                  value: props.productRentPrice,
                 },
               },
             ],

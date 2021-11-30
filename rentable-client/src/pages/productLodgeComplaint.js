@@ -1,52 +1,94 @@
-import { Radio } from "@material-ui/core";
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import axios from "axios";
+import * as API from "../constants/api-routes";
 
-const ProductLodgeComplaint = () => {
-  const location = useLocation();
-  // const { productId } = location.state;
-  // console.log("card: " + productId);
+function ProductLodgeComplaint(props) {
+  const { state } = props.location;
+  console.log("State received by this component: " + JSON.stringify(state));
+
+  const [productCard, setProductCard] = useState(state);
+  const [isRefundRequested, setIsRefundRequested] = useState(false);
+  const [complaintDescription, setComplaintDescription] = useState("");
+
+  const addNewComplaint = async (e) => {
+    e.preventDefault();
+    const requestOptions = {
+      product_id: productCard.id,
+      description: complaintDescription,
+      is_refund_requested: isRefundRequested,
+      renter_username: sessionStorage.getItem("username"),
+    };
+    console.log("Request Options: " + JSON.stringify(requestOptions));
+
+    axios.post(API.ADD_NEW_COMPLAINT, requestOptions).then((response) => {
+      console.log("Response: " + JSON.stringify(response));
+    });
+  };
+
   return (
     <div
       className="card container mt-S"
       style={{ marginTop: "100px", width: "500px" }}
     >
-      <form>
-        <p className="h4 text-center mb-4">Write a Customer Review</p>
-        <label htmlFor="defaultFormContactNameEx" className="grey-text">
-          Product
-        </label>
-        <input
-          type="text"
-          id="defaultFormContactNameEx"
-          className="form-control"
-          value="Tesla Model X"
-          disabled="disable"
-        />
-        <br />
-
-        <br />
-        <label htmlFor="defaultFormContactMessageEx" className="grey-text">
-          Complaint
-        </label>
-        <textarea
-          type="text"
-          id="defaultFormContactMessageEx"
-          className="form-control"
-          rows="8"
-        />
-        <div className="text-center mt-4">
-          <button
-            // disabled={isLoading ? true : false}
-            type="submit"
-            className="btn btn-dark btn-primary w-100"
+      <div className="card-body">
+        <form onSubmit={addNewComplaint}>
+          <p className="h4 text-center mb-4">Lodge a Complaint</p>
+          <label htmlFor="defaultFormContactNameEx" className="form-label">
+            Product
+          </label>
+          <input
+            type="text"
+            id="defaultFormContactNameEx"
+            className="form-control"
+            value={productCard.title}
+            disabled="disable"
+          />
+          <br />
+          <label htmlFor="defaultFormContactNameEx" className="form-label">
+            Would you like to request for a full refund?
+          </label>
+          <select
+            type="text"
+            id="defaultFormContactNameEx"
+            className="form-select"
+            value={isRefundRequested}
+            onChange={(e) => setIsRefundRequested(e.currentTarget.value)}
+            required
           >
-            Request refund
-          </button>
-        </div>
-      </form>
+            <option value="Select" selected>
+              --- Select ---
+            </option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+          </select>
+          <br />
+          <label
+            htmlFor="defaultFormContactMessageEx"
+            className="form-label"
+            required
+          >
+            Please provide us with a few more details
+          </label>
+          <textarea
+            type="text"
+            id="defaultFormContactMessageEx"
+            className="form-control"
+            rows="8"
+            value={complaintDescription}
+            onChange={(e) => setComplaintDescription(e.currentTarget.value)}
+          />
+          <div className="text-center mt-4">
+            <button
+              type="submit"
+              className="btn btn-dark btn-primary w-49 float: left"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
-};
+}
 
 export default ProductLodgeComplaint;

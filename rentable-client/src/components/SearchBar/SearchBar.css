@@ -180,3 +180,36 @@ a {
 #clearBtn {
   cursor: pointer;
 }
+
+.microphone {
+  height: 55px;
+  width: 50px;
+  background-color: white;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.microphone.isListening {
+  /* animation: animationFrames linear 0.8s;
+  animation-iteration-count: infinite;*/
+  /* transform-origin: 50% 50%;  */
+  height: 55px;
+  width: 50px;
+  background-color: white;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  animation: pulsate infinite 1.5s;
+}
+
+@keyframes pulsate {
+  0% {
+    -webkit-transform: scale(0.6, 0.6);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1, 1);
+    opacity: 0;
+  }
+}

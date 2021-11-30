@@ -7,3 +7,5 @@ export const ADD_NEW_LISTING = api_server + "/add_new_listing";
 export const UPLOAD_IMAGE = api_server + "/upload_image";
 export const ADMIN_APPROVE_LISTING = api_server + "/approve_listing";
 export const ADMIN_DENY_LISTING = api_server + "/deny_listing";
+export const ADD_NEW_COMPLAINT = api_server + "/add_new_complaint";
+export const ADD_NEW_REVIEW = api_server + "/add_new_review";

@@ -22,7 +22,8 @@ import ProductDetails from "./pages/productDetails";
 import EnhancedTable from "./pages/adminApproveListings";
 import Payment from "./pages/productPayment";
 import ProductLodgeComplaint from "./pages/productLodgeComplaint";
-import AdminComplaints from "./pages/adminComplaints";
+import AdminViewComplaints from "./pages/adminComplaints";
+import ProductAddReview from "./pages/productAddReview";
 
 function App() {
   const [loginStatus, setLoginStatus] = useState(
@@ -171,13 +172,13 @@ function App() {
         <Route path="/add-new-listing" exact component={OwnerAddNewListing} />
         <Route path="/product-details" exact component={ProductDetails} />
         <Route path="/product-payment" exact component={Payment} />
-        <Route path="/admin-complaints" exact component={AdminComplaints} />
+        <Route path="/admin-complaints" exact component={AdminViewComplaints} />
         <Route
           path="/product-lodge-complaint"
           exact
           component={ProductLodgeComplaint}
         />
-        <Route path="/product-review" exact component={Payment} />
+        <Route path="/product-add-review" exact component={ProductAddReview} />
       </Switch>
     </Router>
   );

@@ -95,7 +95,7 @@ const rows = [
   ),
 ];
 
-export default function AdminComplaints() {
+export default function AdminViewComplaints() {
   return (
     <div
       style={{ padding: "100px", paddingLeft: "200px", paddingRight: "200px" }}
