@@ -9,6 +9,7 @@ pymysql = "*"
 cryptography = "*"
 flask-jwt-extended = "*"
 flask-cors = "*"
+flask-socketio = "*"
 
 [dev-packages]
 

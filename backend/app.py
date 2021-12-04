@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from flask_jwt_extended import create_access_token, JWTManager
 from flask_cors import CORS
+# from flask_socketio import SocketIO, send
 import pymysql
 
 conn = pymysql.connect(
@@ -17,12 +18,21 @@ conn = pymysql.connect(
 UPLOAD_FOLDER = 'backend/files'
 
 app = Flask(__name__)
-# CORS(app)
+CORS(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # --- JWT Initialization ---
 app.config["JWT_SECRET_KEY"] = "rentable"
 jwt = JWTManager(app)
+
+# socketio = SocketIO(app, cors_allowed_origins="*")
+
+
+# @socketio.on("message")
+# def handleMessage(msg):
+#     print(msg)
+#     send(msg, broadcast=True)
+#     return None
 
 
 # @app.after_request
@@ -84,7 +94,7 @@ def register():
 
         # Insert into user table
         cur = conn.cursor()
-        query_insert_user = """INSERT INTO 
+        query_insert_user = """INSERT INTO
         user(username, user_type, first_name, last_name, email)
         VALUES(%s, %s, %s, %s, %s)"""
         cur.execute(query_insert_user, (username, user_type,
@@ -281,5 +291,20 @@ def add_new_review():
         return jsonify({'msg': 'Review added successfully', 'review_id': new_review_id})
 
 
+@app.route('/validate_coupon', methods=['GET', 'POST'])
+def validate_coupon():
+    if request.method == 'GET':
+        coupon_code = request.json.get('coupon_code')
+        query_find_coupon = """SELECT * from coupon_code WHERE coupon_code = %s"""
+        cur = conn.cursor()
+        if cur.execute(query_find_coupon, (coupon_code)):
+            result = cur.fetchall()
+            print('result: ', result[0]['discount_percent'])
+            return jsonify({'discount_percent': result[0]['discount_percent']})
+        else:
+            return jsonify({'discount_percent': 0})
+
+
 if __name__ == '__main__':
     app.run(debug=True)
+    # socketio.run(app, debug=True)

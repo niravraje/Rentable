@@ -24,6 +24,8 @@ import Payment from "./pages/productPayment";
 import ProductLodgeComplaint from "./pages/productLodgeComplaint";
 import AdminViewComplaints from "./pages/adminComplaints";
 import ProductAddReview from "./pages/productAddReview";
+import ChatApplication from "./pages/dnu_chatApplication";
+import ChatApp from "./pages/chatApp";
 
 function App() {
   const [loginStatus, setLoginStatus] = useState(
@@ -179,6 +181,8 @@ function App() {
           component={ProductLodgeComplaint}
         />
         <Route path="/product-add-review" exact component={ProductAddReview} />
+        {/* <Route path="/chat-app" exact component={ChatApplication} /> */}
+        <Route path="/chat-app" exact component={ChatApp} />
       </Switch>
     </Router>
   );

@@ -30,7 +30,7 @@ function SearchBar({ placeholder, data }) {
     console.log(searchCate);
     console.log(category);
 
-    if (searchCate === "") {
+    if (category === "") {
       setFilteredData(
         data.filter((value) => {
           return value.category.toLowerCase().includes(category.toLowerCase());

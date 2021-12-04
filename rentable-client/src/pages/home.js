@@ -14,10 +14,10 @@ const Home = () => {
     {
       approval_status: 0,
       category: "car",
-      description: "Tesla Model S",
+      description: "Default Car",
       id: 1,
       owner_username: "niravraje2",
-      rent_frequency: "day",
+      rent_frequency: "month",
       rent_price: "110",
       title: "default",
     },
