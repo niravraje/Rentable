@@ -18,7 +18,7 @@ conn = pymysql.connect(
 UPLOAD_FOLDER = 'backend/files'
 
 app = Flask(__name__)
-CORS(app)
+# CORS(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # --- JWT Initialization ---
@@ -306,5 +306,4 @@ def validate_coupon():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
-    # socketio.run(app, debug=True)
+    app.run()
