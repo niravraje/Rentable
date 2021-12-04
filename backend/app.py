@@ -8,11 +8,11 @@ from flask_cors import CORS
 import pymysql
 
 conn = pymysql.connect(
-    host='localhost',
-    database='rentable',
-    user='root',
-    password='password@123',
-    charset='utf8mb4',
+    host='us-cdbr-east-04.cleardb.com',
+    database='heroku_0727475fa778035',
+    user='b0dfe236640c01',
+    password='b7a2971a',
+    # charset='utf8mb4',
     cursorclass=pymysql.cursors.DictCursor
 )
 UPLOAD_FOLDER = 'backend/files'
