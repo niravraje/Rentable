@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-import React, { useState, useEffect } from "react";
-import * as API from "../constants/api-routes";
-=======
 import React, { useState } from "react";
->>>>>>> dev
 import { FaBorderNone } from "react-icons/fa";
 import * as API from "../constants/api-routes";
 

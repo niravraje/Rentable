@@ -24,28 +24,6 @@ const OwnerAddNewListing = () => {
 
     let userTypeLocal = sessionStorage.getItem("user_type");
     console.log("User type: " + userTypeLocal);
-<<<<<<< HEAD
-    console.log(requestOptions);
-
-    try {
-      const res = await fetch(API.ADD_NEW_LISTING, requestOptions);
-      console.log("Response on add_new_listing request: " + res);
-      const data = await res.json();
-
-      console.log("Status code of request: " + res.status);
-      console.log("res.json(): " + JSON.stringify(data));
-
-      if (res.status !== 201) {
-        setError("Error: Could not create the new listing.");
-        return;
-      }
-      setError("");
-      console.log("Listing added successfully.");
-    } catch (err) {
-      setError("Error. Internal server error.");
-      console.log("Server error occurred. Check if the server is running.");
-    }
-=======
     console.log(imageSelected);
 
     // try {
@@ -117,7 +95,6 @@ const OwnerAddNewListing = () => {
         console.log("Flask Response for Add New Listing");
         console.log(response);
       });
->>>>>>> dev
 
     setImageSelected(null);
     setCategory("");

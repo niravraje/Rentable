@@ -9,41 +9,23 @@ import * as API from "../constants/api-routes";
 const Home = () => {
   const [cards, setCards] = useState([]);
   const [error, setError] = useState("");
-<<<<<<< HEAD
-=======
   const [areProductsFetched, setAreProductsFetched] = useState(false);
->>>>>>> dev
   const [productData, setProductData] = useState([
     {
       approval_status: 0,
       category: "car",
-<<<<<<< HEAD
-      description: "Tesla Model S",
-      id: 1,
-      owner_username: "niravraje2",
-      rent_frequency: "day",
-      rent_price: "110",
-      title: "Tesla",
-=======
       description: "Default Car",
       id: 1,
       owner_username: "niravraje2",
       rent_frequency: "month",
       rent_price: "110",
       title: "default",
->>>>>>> dev
     },
   ]);
 
   useEffect(() => {
-<<<<<<< HEAD
-    console.log("useEffect triggered.");
-
-    const get_products = async (e) => {
-=======
     console.log("useEffect triggered");
     const get_filtered_products = async (e) => {
->>>>>>> dev
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -52,13 +34,8 @@ const Home = () => {
         }),
       };
       try {
-<<<<<<< HEAD
-        const res = await fetch(API.GET_PRODUCTS, requestOptions);
-        console.log("Response on get_products request: " + res);
-=======
         const res = await fetch(API.GET_FILTERED_PRODUCTS, requestOptions);
         console.log("Response on get_filtered_products request: " + res);
->>>>>>> dev
         const data = await res.json();
 
         console.log("res -> data = " + data);
@@ -78,11 +55,7 @@ const Home = () => {
         // setProductData(res.data);
         // console.log("data.category: ");
         setProductData(data);
-<<<<<<< HEAD
-
-=======
         setAreProductsFetched(true);
->>>>>>> dev
         return;
       } catch (err) {
         setError("Error. Internal server error.");

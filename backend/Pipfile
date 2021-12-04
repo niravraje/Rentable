@@ -8,13 +8,8 @@ flask = "*"
 pymysql = "*"
 cryptography = "*"
 flask-jwt-extended = "*"
-<<<<<<< HEAD
-gunicorn = "*"
-flask-cors = "*"
-=======
 flask-cors = "*"
 flask-socketio = "*"
->>>>>>> dev
 
 [dev-packages]
 
