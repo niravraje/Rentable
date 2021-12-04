@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import * as API from "../constants/api-routes";
+=======
+import React, { useState } from "react";
+>>>>>>> dev
 import { FaBorderNone } from "react-icons/fa";
+import * as API from "../constants/api-routes";
 
 // const case1 = ({username,password,confirmPassword,email}) =>{
 //     return new Promise((resolve, reject) =>{
@@ -77,7 +82,7 @@ const Signup = (props) => {
       console.log(
         "Signup.js: Before setting login status: " + props.loginStatus
       );
-      props.handleLogin();
+      props.handleLogin(data.username);
       console.log(
         "Signup.js: Before setting login status: " + props.loginStatus
       );

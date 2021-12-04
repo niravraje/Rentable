@@ -1,14 +1,14 @@
 .menu-buttons {
   /* margin: 10px; */
   margin-top: 20px;
-  background-color: rgb(221, 221, 221);
+  /* background-color: rgb(221, 221, 221); */
   border-color: black;
-  color: black;
-  /* font-weight: bold; */
+  /* color: black; */
+  font-weight: bold;
 }
 
-.menu-buttons:hover {
+/* .menu-buttons:hover {
   background-color: darkgray;
-  /* background-color: rgb(80, 176, 255); */
+  background-color: rgb(80, 176, 255);
   color: black;
-}
+} */

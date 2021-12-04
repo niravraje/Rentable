@@ -19,6 +19,13 @@ import AdminDashboard from "./pages/adminDashboard";
 import AdminRefund from "./pages/adminRefund";
 import AdminMessages from "./pages/adminMessages";
 import ProductDetails from "./pages/productDetails";
+import EnhancedTable from "./pages/adminApproveListings";
+import Payment from "./pages/productPayment";
+import ProductLodgeComplaint from "./pages/productLodgeComplaint";
+import AdminViewComplaints from "./pages/adminComplaints";
+import ProductAddReview from "./pages/productAddReview";
+import ChatApplication from "./pages/dnu_chatApplication";
+import ChatApp from "./pages/chatApp";
 
 function App() {
   const [loginStatus, setLoginStatus] = useState(
@@ -32,9 +39,17 @@ function App() {
       ? sessionStorage.getItem("user_type")
       : ""
   );
+  const [username, setUsername] = useState(
+    sessionStorage.getItem("username") &&
+      sessionStorage.getItem("username") !== ""
+      ? sessionStorage.getItem("username")
+      : ""
+  );
 
-  const handleLogin = () => {
+  const handleLogin = (usernameValue) => {
     setLoginStatus(true);
+    setUsername(usernameValue);
+    sessionStorage.setItem("username", usernameValue);
   };
 
   const handleLogout = () => {
@@ -150,14 +165,24 @@ function App() {
         />
         <ProtectedRoute
           exact
-          path="/admin-messages"
+          path="/admin-approve-listings"
           loginStatus={loginStatus}
           userType={userType}
-          component={AdminMessages}
+          component={EnhancedTable}
         />
         <Route path="/forgot-password" exact component={ForgotPassword} />
         <Route path="/add-new-listing" exact component={OwnerAddNewListing} />
         <Route path="/product-details" exact component={ProductDetails} />
+        <Route path="/product-payment" exact component={Payment} />
+        <Route path="/admin-complaints" exact component={AdminViewComplaints} />
+        <Route
+          path="/product-lodge-complaint"
+          exact
+          component={ProductLodgeComplaint}
+        />
+        <Route path="/product-add-review" exact component={ProductAddReview} />
+        {/* <Route path="/chat-app" exact component={ChatApplication} /> */}
+        <Route path="/chat-app" exact component={ChatApp} />
       </Switch>
     </Router>
   );

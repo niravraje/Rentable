@@ -1,59 +1,13 @@
-// import React, { useState } from "react";
-// import "./SearchBar.css";
-// import SearchIcon from "@material-ui/icons/Search";
-// import CloseIcon from "@material-ui/icons/Close";
-// import CardPage from "../Card/CardPage.js";
-
-// function SearchBar({ placeholder, filterCards, displayAllCards }) {
-//   const [wordEntered, setWordEntered] = useState("");
-
-//   const updateCards = () => {
-//     displayAllCards();
-//   };
-
-//   const handleFilter = (event) => {
-//     const searchWord = event.target.value;
-//     setWordEntered(searchWord);
-//     filterCards(wordEntered);
-//   };
-
-//   const clearInput = () => {
-//     setWordEntered("");
-//   };
-
-//   return (
-//     <div className="search">
-//       <div className="searchInputs">
-//         <input
-//           type="text"
-//           placeholder={placeholder}
-//           value={wordEntered}
-//           onChange={handleFilter}
-//         />
-//         <div className="searchIcon">
-//           {wordEntered.length === 0 ? (
-//             updateCards(<SearchIcon />)
-//           ) : (
-//             <CloseIcon id="clearBtn" onClick={clearInput} />
-//           )}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default SearchBar;
-
-// 31st Oct 2021, updated
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./SearchBar.css";
+import { useVoice } from "../Voice/useVoice";
+import Mic from "@mui/icons-material/Mic";
 
 //npm install @material-ui/core
 import SearchIcon from "@material-ui/icons/Search";
 //npm install @material-ui/icons
 import CloseIcon from "@material-ui/icons/Close";
-import Cards from "../Card/Card.js";
+import Card from "../Card/Card.js";
 import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
 
 function SearchBar({ placeholder, data }) {
@@ -61,10 +15,13 @@ function SearchBar({ placeholder, data }) {
   const [category, setCategory] = useState("Apartment");
   const [minVal, setMinVal] = useState(0);
   const [maxVal, setMaxVal] = useState(10000);
-  const initalData = data.filter((value) => {
-    return value.category.toLowerCase().includes(category.toLowerCase());
-  });
-  const [filteredData, setFilteredData] = useState(initalData);
+  const [filteredData, setFilteredData] = useState(
+    data.filter((value) => {
+      return value.category.toLowerCase().includes(category.toLowerCase());
+    })
+  );
+
+  console.log("filtered data: " + filteredData);
 
   const cateFilter = (event) => {
     //get user input from search bar
@@ -73,8 +30,12 @@ function SearchBar({ placeholder, data }) {
     console.log(searchCate);
     console.log(category);
 
-    if (searchCate === "") {
-      setFilteredData(initalData);
+    if (category === "") {
+      setFilteredData(
+        data.filter((value) => {
+          return value.category.toLowerCase().includes(category.toLowerCase());
+        })
+      );
     } else {
       const newFilter = data.filter((value) => {
         return (
@@ -107,19 +68,42 @@ function SearchBar({ placeholder, data }) {
     setFilteredData(newFilter);
   };
 
-  const priceFilter = ({ event }) => {
-    console.log("min: " + minVal);
-    console.log("max: " + maxVal);
-    const newFilter = filteredData.filter((value) => {
-      return value.rent_price >= minVal && value.rent_price <= maxVal;
-    });
-    setFilteredData(newFilter);
-  };
-
   const clearInput = () => {
-    setFilteredData([]);
+    setFilteredData(
+      data.filter((value) => {
+        return value.category.toLowerCase().includes(category.toLowerCase());
+      })
+    );
     setWordEntered("");
   };
+
+  const { text, isListening, listen, voiceSupported } = useVoice();
+
+  useEffect(() => {
+    if (text !== "") {
+      setWordEntered(text);
+      const newFilter = data.filter((value) => {
+        return (
+          value.category.toLowerCase().includes(category.toLowerCase()) &&
+          value.title.toLowerCase().includes(text.toLowerCase()) &&
+          value.rent_price >= minVal &&
+          value.rent_price <= maxVal
+        );
+      });
+      setFilteredData(newFilter);
+    }
+  }, [text]);
+
+  if (!voiceSupported) {
+    return (
+      <div className="app">
+        <h1>
+          Voice recognition is not supported by your browser, please re-try with
+          a supported browser e.g. Chrome
+        </h1>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -176,6 +160,13 @@ function SearchBar({ placeholder, data }) {
             </select> */}
         {/* <div className="card card-body"> */}
         <div className="searchInputs">
+          <div className="microphone">
+            <Mic
+              className={`microphone ${isListening && "isListening"}`}
+              onClick={listen}
+              aria-hidden="true"
+            />
+          </div>
           <input
             type="text"
             placeholder={placeholder}
@@ -213,8 +204,8 @@ function SearchBar({ placeholder, data }) {
           {filteredData.slice(0, 15).map((value, key) => {
             return (
               <div>
-                <a className="dataItem" href={value.image} target="_blank">
-                  <Cards card={value} />
+                <a className="dataItem" target="_blank">
+                  <Card card={value} />
                 </a>
               </div>
             );
