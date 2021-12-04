@@ -45,23 +45,6 @@ jwt = JWTManager(app)
 #     return response
 
 
-# @app.after_request
-# def after_request(response):
-#     response.headers.add('Access-Control-Allow-Origin',
-#                          'https://rentable1.herokuapp.com')
-#     response.headers.add('Access-Control-Allow-Headers',
-#                          'Content-Type,Authorization')
-#     response.headers.add('Access-Control-Allow-Methods',
-#                          'GET,PUT,POST,DELETE,OPTIONS')
-#     response.headers.add('Access-Control-Allow-Credentials', 'true')
-# return response
-
-
-@app.route('/', methods=['GET', 'POST'])
-def serve():
-    return "Rentable API Server"
-
-
 def get_unique_id(table_name):
     cur = conn.cursor()
     query = "SELECT count(*) AS row_count FROM " + str(table_name)
@@ -75,7 +58,6 @@ def get_unique_id(table_name):
 
 
 @app.route('/register', methods=['GET', 'POST'])
-@cross_origin()
 def register():
     if request.method == 'POST':
         email = request.json.get('email')
@@ -121,18 +103,12 @@ def register():
 
         access_token = create_access_token(identity=email)
 
-
-<< << << < HEAD
-        return jsonify(access_token=access_token)
-== == == =
         return jsonify(access_token=access_token, username=username), 201
->>>>>> > dev
     else:
-        return jsonify(({'msg': 'HTTP method must be POST'}))
+        return jsonify(({'msg': 'HTTP method must be POST'})), 405
 
 
 @app.route('/sign_in', methods=['GET', 'POST'])
-@cross_origin()
 def sign_in():
     if request.method == 'POST':
         email = request.json.get('email')
@@ -149,7 +125,7 @@ def sign_in():
             fetched_password = result.get('password')
             fetched_user_type = result.get('user_type')
         else:
-            return jsonify({'msg': 'User not found.'})
+            return jsonify({'msg': 'User not found.'}), 404
 
         # Retrieve username
         cur = conn.cursor()
@@ -164,15 +140,9 @@ def sign_in():
         if login_type == 'manual':
             if check_password_hash(fetched_password, password) and user_type == fetched_user_type:
                 access_token = create_access_token(identity=email)
-
-
-<< << << < HEAD
-                return jsonify(access_token=access_token), 200
-== == == =
                 return jsonify(access_token=access_token, username=fetched_username), 202
->>>>>> > dev
             else:
-                return jsonify({'msg': 'Login failed'})
+                return jsonify({'msg': 'Login failed'}), 401
 
         # Google OAuth login
 
@@ -180,7 +150,6 @@ def sign_in():
 
 
 @app.route('/get_products', methods=['GET', 'POST'])
-@cross_origin()
 def get_products():
     if request.method == 'GET':
         cur = conn.cursor()
@@ -192,8 +161,6 @@ def get_products():
             return jsonify(result)
         else:
             return jsonify({'msg': 'No products found in the database.'}), 404
-    else:
-        return jsonify({'msg': 'Request needs to be a POST request.'})
 
 
 @app.route('/get_filtered_products', methods=['GET', 'POST'])
