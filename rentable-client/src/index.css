@@ -19,8 +19,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #20bf55;
-  background-image: linear-gradient(110deg, #20bf55 0%, #01baef 74%);
+  /* background: url("https://res.cloudinary.com/rentable1/image/upload/v1638689430/nature-outdoors-sky-dawn_je98ef.jpg"); */
+  background: url("https://res.cloudinary.com/rentable1/image/upload/v1638686413/skyline_w5rav0.jpg");
+  /* background-color: #20bf55;
+  background-image: linear-gradient(110deg, #20bf55 0%, #01baef 74%); */
 }
 
 code {
