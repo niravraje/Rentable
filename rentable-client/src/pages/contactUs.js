@@ -9,9 +9,7 @@ const ContactUs = () => {
         alignItems: "center",
         height: "90vh",
       }}
-    >
-      <h1>Rentable: Contact Us</h1>
-    </div>
+    ></div>
   );
 };
 

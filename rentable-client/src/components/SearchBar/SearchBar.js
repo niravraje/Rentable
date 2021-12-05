@@ -12,7 +12,7 @@ import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
 
 function SearchBar({ placeholder, data }) {
   const [wordEntered, setWordEntered] = useState("");
-  const [category, setCategory] = useState("Apartment");
+  const [category, setCategory] = useState("apartment");
   const [minVal, setMinVal] = useState(0);
   const [maxVal, setMaxVal] = useState(10000);
   const [filteredData, setFilteredData] = useState(

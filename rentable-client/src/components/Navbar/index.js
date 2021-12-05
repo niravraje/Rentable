@@ -21,6 +21,7 @@ const Navbar = (props) => {
           <NavLink to="/about">About</NavLink>
           <NavLink to="/services">Services</NavLink>
           <NavLink to="/contact-us">Contact Us</NavLink>
+          <NavLink to="/chat-with-us">Chat with Us</NavLink>
 
           {!props.loginStatus ? (
             <NavLink to="/owner-signin">List with Us</NavLink>

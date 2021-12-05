@@ -1,17 +1,16 @@
-import React from 'react'
+import React from "react";
 
 const About = () => {
-    return (
-        <div style={
-            {
-                display: 'flex',
-                justifyContent:'center',
-                alignItems: 'center',
-                height: '90vh'
-            }}>
-            <h1>We are Team6!</h1>
-        </div>
-    )
-}
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "90vh",
+      }}
+    ></div>
+  );
+};
 
-export default About
+export default About;

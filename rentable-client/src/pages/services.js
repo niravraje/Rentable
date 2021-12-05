@@ -1,17 +1,16 @@
-import React from 'react'
+import React from "react";
 
 const Services = () => {
-    return (
-        <div style={
-            {
-                display: 'flex',
-                justifyContent:'center',
-                alignItems: 'center',
-                height: '90vh'
-            }}>
-            <h1>No Services for Now</h1>
-        </div>
-    )
-}
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "90vh",
+      }}
+    ></div>
+  );
+};
 
-export default Services
+export default Services;

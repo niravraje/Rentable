@@ -26,6 +26,8 @@ import AdminViewComplaints from "./pages/adminComplaints";
 import ProductAddReview from "./pages/productAddReview";
 import ChatApplication from "./pages/dnu_chatApplication";
 import ChatApp from "./pages/chatApp";
+import LandingPage from "./pages/landing";
+import ChatBotPage from "./pages/chatBot";
 
 function App() {
   const [loginStatus, setLoginStatus] = useState(
@@ -64,127 +66,140 @@ function App() {
   };
 
   return (
-    <Router>
-      <Navbar
-        loginStatus={loginStatus}
-        userType={userType}
-        handleLogout={handleLogout}
-      />
-      <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/about" exact component={About} />
-        <Route path="/services" exact component={Services} />
-        <Route path="/contact-us" exact component={ContactUs} />
-        <Route
-          exact
-          path="/signin"
-          render={(props) => (
-            <SignIn
-              {...props}
-              handleLogin={handleLogin}
-              loginStatus={loginStatus}
-              userType={userType}
-              handleUserType={handleUserType}
-            />
-          )}
-        />
-        <Route
-          exact
-          path="/signup"
-          render={(props) => (
-            <SignUp
-              {...props}
-              handleLogin={handleLogin}
-              loginStatus={loginStatus}
-              userType={userType}
-              handleUserType={handleUserType}
-            />
-          )}
-        />
-        <Route
-          exact
-          path="/owner-signin"
-          render={(props) => (
-            <OwnerSignIn
-              {...props}
-              handleLogin={handleLogin}
-              loginStatus={loginStatus}
-              userType={userType}
-              handleUserType={handleUserType}
-            />
-          )}
-        />
-        <Route
-          exact
-          path="/owner-signup"
-          render={(props) => (
-            <OwnerSignUp
-              {...props}
-              handleLogin={handleLogin}
-              loginStatus={loginStatus}
-              userType={userType}
-              handleUserType={handleUserType}
-            />
-          )}
-        />
-        <ProtectedRoute
-          exact
-          path="/renter-account"
+    <div>
+      <Router>
+        <Navbar
           loginStatus={loginStatus}
           userType={userType}
-          component={RenterAccount}
+          handleLogout={handleLogout}
         />
-        <ProtectedRoute
-          exact
-          path="/renter-dashboard"
-          loginStatus={loginStatus}
-          userType={userType}
-          component={RenterDashboard}
-        />
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/landing" exact component={LandingPage} />
+          <Route path="/chat-with-us" exact component={ChatBotPage} />
 
-        <ProtectedRoute
-          exact
-          path="/owner-dashboard"
-          loginStatus={loginStatus}
-          userType={userType}
-          component={OwnerDashboard}
-        />
-        <ProtectedRoute
-          exact
-          path="/admin-dashboard"
-          loginStatus={loginStatus}
-          userType={userType}
-          component={AdminDashboard}
-        />
-        <ProtectedRoute
-          exact
-          path="/admin-refund"
-          loginStatus={loginStatus}
-          userType={userType}
-          component={AdminRefund}
-        />
-        <ProtectedRoute
-          exact
-          path="/admin-approve-listings"
-          loginStatus={loginStatus}
-          userType={userType}
-          component={EnhancedTable}
-        />
-        <Route path="/forgot-password" exact component={ForgotPassword} />
-        <Route path="/add-new-listing" exact component={OwnerAddNewListing} />
-        <Route path="/product-details" exact component={ProductDetails} />
-        <Route path="/product-payment" exact component={Payment} />
-        <Route path="/admin-complaints" exact component={AdminViewComplaints} />
-        <Route
-          path="/product-lodge-complaint"
-          exact
-          component={ProductLodgeComplaint}
-        />
-        <Route path="/product-add-review" exact component={ProductAddReview} />
-        {/* <Route path="/chat-app" exact component={ChatApplication} /> */}
-        <Route path="/chat-app" exact component={ChatApp} />
-      </Switch>
-    </Router>
+          <Route path="/about" exact component={About} />
+          <Route path="/services" exact component={Services} />
+          <Route path="/contact-us" exact component={ContactUs} />
+          <Route
+            exact
+            path="/signin"
+            render={(props) => (
+              <SignIn
+                {...props}
+                handleLogin={handleLogin}
+                loginStatus={loginStatus}
+                userType={userType}
+                handleUserType={handleUserType}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/signup"
+            render={(props) => (
+              <SignUp
+                {...props}
+                handleLogin={handleLogin}
+                loginStatus={loginStatus}
+                userType={userType}
+                handleUserType={handleUserType}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/owner-signin"
+            render={(props) => (
+              <OwnerSignIn
+                {...props}
+                handleLogin={handleLogin}
+                loginStatus={loginStatus}
+                userType={userType}
+                handleUserType={handleUserType}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/owner-signup"
+            render={(props) => (
+              <OwnerSignUp
+                {...props}
+                handleLogin={handleLogin}
+                loginStatus={loginStatus}
+                userType={userType}
+                handleUserType={handleUserType}
+              />
+            )}
+          />
+          <ProtectedRoute
+            exact
+            path="/renter-account"
+            loginStatus={loginStatus}
+            userType={userType}
+            component={RenterAccount}
+          />
+          <ProtectedRoute
+            exact
+            path="/renter-dashboard"
+            loginStatus={loginStatus}
+            userType={userType}
+            component={RenterDashboard}
+          />
+
+          <ProtectedRoute
+            exact
+            path="/owner-dashboard"
+            loginStatus={loginStatus}
+            userType={userType}
+            component={OwnerDashboard}
+          />
+          <ProtectedRoute
+            exact
+            path="/admin-dashboard"
+            loginStatus={loginStatus}
+            userType={userType}
+            component={AdminDashboard}
+          />
+          <ProtectedRoute
+            exact
+            path="/admin-refund"
+            loginStatus={loginStatus}
+            userType={userType}
+            component={AdminRefund}
+          />
+          <ProtectedRoute
+            exact
+            path="/admin-approve-listings"
+            loginStatus={loginStatus}
+            userType={userType}
+            component={EnhancedTable}
+          />
+          <Route path="/forgot-password" exact component={ForgotPassword} />
+          <Route path="/add-new-listing" exact component={OwnerAddNewListing} />
+          <Route path="/product-details" exact component={ProductDetails} />
+          <Route path="/product-payment" exact component={Payment} />
+          <Route
+            path="/admin-complaints"
+            exact
+            component={AdminViewComplaints}
+          />
+          <Route
+            path="/product-lodge-complaint"
+            exact
+            component={ProductLodgeComplaint}
+          />
+          <Route
+            path="/product-add-review"
+            exact
+            component={ProductAddReview}
+          />
+          {/* <Route path="/chat-app" exact component={ChatApplication} /> */}
+          <Route path="/chat-app" exact component={ChatApp} />
+        </Switch>
+      </Router>
+    </div>
   );
 }
 
