@@ -292,7 +292,7 @@ def add_new_review():
 @app.route('/validate_coupon', methods=['GET', 'POST'])
 def validate_coupon():
     conn.ping(reconnect=True)
-    if request.method == 'GET':
+    if request.method == 'POST':
         coupon_code = request.json.get('coupon_code')
         query_find_coupon = """SELECT * from coupon_code WHERE coupon_code = %s"""
         cur = conn.cursor()

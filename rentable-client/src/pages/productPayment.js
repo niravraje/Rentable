@@ -18,15 +18,30 @@ function Payment(props) {
   const [productCard, setProductCard] = useState(state);
   const [finalRentPrice, setFinalRentPrice] = useState(productCard.rent_price);
   const [couponCode, setCouponCode] = useState(null);
+  const [couponCodeValid, setCouponCodeValid] = useState(null);
 
   console.log("product card here: " + JSON.stringify(productCard));
 
-  const applyCoupon = () => {
+  const applyCoupon = async (e) => {
+    e.preventDefault();
+
     const requestOptions = {
       coupon_code: couponCode,
     };
-    axios.get(API.VALIDATE_COUPON, requestOptions).then((response) => {
+    axios.post(API.VALIDATE_COUPON, requestOptions).then((response) => {
       console.log("Coupon validation response: " + JSON.stringify(response));
+      if (response.data.discount_percent == 0) {
+        console.log("Invalid coupon");
+        setCouponCodeValid(false);
+      } else {
+        setCouponCodeValid(true);
+        const discountDecimal =
+          parseFloat(response.data.discount_percent) * 0.01;
+        const newDiscountPrice =
+          productCard.rent_price - productCard.rent_price * discountDecimal;
+        setFinalRentPrice(newDiscountPrice);
+        console.log("Price after coupon is applied: " + finalRentPrice);
+      }
     });
     // setFinalRentPrice();
   };
@@ -49,6 +64,21 @@ function Payment(props) {
           <Button variant="primary" type="submit">
             Apply Coupon
           </Button>
+          {couponCode && couponCodeValid === true ? (
+            <div
+              style={{ paddingLeft: "20px", display: "inline", color: "green" }}
+            >
+              Coupon applied successfully!
+            </div>
+          ) : null}
+          {couponCode && couponCodeValid === false ? (
+            <div
+              style={{ paddingLeft: "20px", display: "inline", color: "red" }}
+            >
+              Invalid coupon code.
+            </div>
+          ) : null}
+
           <Form.Group
             className="mb-3"
             controlId="formBasicPassword"
@@ -61,6 +91,7 @@ function Payment(props) {
               disabled="disable"
             />
           </Form.Group>
+          <Paypal productRentPrice={finalRentPrice} />
         </Form>
       </div>
       <div>
@@ -71,9 +102,7 @@ function Payment(props) {
               paddingLeft: "760px",
               width: "60%",
             }}
-          >
-            <Paypal productRentPrice={finalRentPrice} />
-          </div>
+          ></div>
         ) : (
           <button
             onClick={() => {
