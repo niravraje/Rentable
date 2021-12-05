@@ -8,11 +8,11 @@ from flask_cors import CORS
 import pymysql
 
 conn = pymysql.connect(
-    host='us-cdbr-east-04.cleardb.com',
-    database='heroku_0727475fa778035',
-    user='b0dfe236640c01',
-    password='b7a2971a',
-    # charset='utf8mb4',
+    host='localhost',
+    database='rentable',
+    user='root',
+    password='password@123',
+    charset='utf8mb4',
     cursorclass=pymysql.cursors.DictCursor
 )
 UPLOAD_FOLDER = 'backend/files'
@@ -24,25 +24,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # --- JWT Initialization ---
 app.config["JWT_SECRET_KEY"] = "rentable"
 jwt = JWTManager(app)
-
-# socketio = SocketIO(app, cors_allowed_origins="*")
-
-
-# @socketio.on("message")
-# def handleMessage(msg):
-#     print(msg)
-#     send(msg, broadcast=True)
-#     return None
-
-
-# @app.after_request
-# def after_request(response):
-#     response.headers.add('Access-Control-Allow-Origin', '*')
-#     response.headers.add('Access-Control-Allow-Headers',
-#                          'Content-Type, Authorization')
-#     response.headers.add('Access-Control-Allow-Methods',
-#                          'GET,PUT,POST,DELETE,OPTIONS')
-#     return response
 
 
 def get_unique_id(table_name):

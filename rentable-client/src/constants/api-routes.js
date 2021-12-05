@@ -1,4 +1,4 @@
-const api_server = "https://rentable1-api.herokuapp.com";
+const api_server = "http://localhost:5000";
 export const GET_PRODUCTS = api_server + "/get_products";
 export const GET_FILTERED_PRODUCTS = api_server + "/get_filtered_products";
 export const REGISTER = api_server + "/register";
