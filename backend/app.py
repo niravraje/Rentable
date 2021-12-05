@@ -25,25 +25,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config["JWT_SECRET_KEY"] = "rentable"
 jwt = JWTManager(app)
 
-# socketio = SocketIO(app, cors_allowed_origins="*")
-
-
-# @socketio.on("message")
-# def handleMessage(msg):
-#     print(msg)
-#     send(msg, broadcast=True)
-#     return None
-
-
-# @app.after_request
-# def after_request(response):
-#     response.headers.add('Access-Control-Allow-Origin', '*')
-#     response.headers.add('Access-Control-Allow-Headers',
-#                          'Content-Type, Authorization')
-#     response.headers.add('Access-Control-Allow-Methods',
-#                          'GET,PUT,POST,DELETE,OPTIONS')
-#     return response
-
 
 def get_unique_id(table_name):
     cur = conn.cursor()
