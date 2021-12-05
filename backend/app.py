@@ -8,11 +8,11 @@ from flask_cors import CORS
 import pymysql
 
 conn = pymysql.connect(
-    host='localhost',
-    database='rentable',
-    user='root',
-    password='password@123',
-    charset='utf8mb4',
+    host='us-cdbr-east-04.cleardb.com',
+    database='heroku_0727475fa778035',
+    user='b0dfe236640c01',
+    password='b7a2971a',
+    # charset='utf8mb4',
     cursorclass=pymysql.cursors.DictCursor
 )
 UPLOAD_FOLDER = 'backend/files'
@@ -57,8 +57,15 @@ def get_unique_id(table_name):
         return 1
 
 
+@app.route('/', methods=['GET', 'POST'])
+def home():
+    conn.ping(reconnect=True)
+    return "Rentable API Server Home Page"
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    conn.ping(reconnect=True)
     if request.method == 'POST':
         email = request.json.get('email')
         user_type = request.json.get('user_type')
@@ -110,6 +117,7 @@ def register():
 
 @app.route('/sign_in', methods=['GET', 'POST'])
 def sign_in():
+    conn.ping(reconnect=True)
     if request.method == 'POST':
         email = request.json.get('email')
         password = request.json.get('password')
@@ -151,7 +159,9 @@ def sign_in():
 
 @app.route('/get_products', methods=['GET', 'POST'])
 def get_products():
+    conn.ping(reconnect=True)
     if request.method == 'GET':
+        conn.ping(reconnect=True)
         cur = conn.cursor()
 
         query_get_all_products = """SELECT * FROM product"""
@@ -165,6 +175,7 @@ def get_products():
 
 @app.route('/get_filtered_products', methods=['GET', 'POST'])
 def get_filtered_products():
+    conn.ping(reconnect=True)
     if request.method == 'POST':
         approval_filter = request.json.get("approval_filter")
         cur = conn.cursor()
@@ -180,6 +191,7 @@ def get_filtered_products():
 
 @app.route('/upload_image', methods=['GET', 'POST'])
 def upload_image():
+    conn.ping(reconnect=True)
     if request.method == 'POST':
         target_folder = "images"
         file = request.files['file']
@@ -192,6 +204,7 @@ def upload_image():
 
 @app.route('/approve_listing', methods=['GET', 'POST'])
 def approve_listing():
+    conn.ping(reconnect=True)
     if request.method == 'POST':
         product_id = request.json.get('id')
 
@@ -206,6 +219,7 @@ def approve_listing():
 
 @app.route('/deny_listing', methods=['GET', 'POST'])
 def deny_listing():
+    conn.ping(reconnect=True)
     if request.method == 'POST':
         product_id = request.json.get('id')
 
@@ -220,6 +234,7 @@ def deny_listing():
 
 @app.route('/add_new_listing', methods=['GET', 'POST'])
 def add_new_listing():
+    conn.ping(reconnect=True)
     if request.method == 'POST':
         category = request.json.get('category')
         title = request.json.get('title')
@@ -252,6 +267,7 @@ def add_new_listing():
 
 @app.route('/add_new_complaint', methods=['GET', 'POST'])
 def add_new_complaint():
+    conn.ping(reconnect=True)
     if request.method == 'POST':
         product_id = request.json.get('product_id')
         description = request.json.get('description')
@@ -273,6 +289,7 @@ def add_new_complaint():
 
 @app.route('/add_new_review', methods=['GET', 'POST'])
 def add_new_review():
+    conn.ping(reconnect=True)
     if request.method == 'POST':
         product_id = request.json.get('product_id')
         review_description = request.json.get('review_description')
@@ -293,6 +310,7 @@ def add_new_review():
 
 @app.route('/validate_coupon', methods=['GET', 'POST'])
 def validate_coupon():
+    conn.ping(reconnect=True)
     if request.method == 'GET':
         coupon_code = request.json.get('coupon_code')
         query_find_coupon = """SELECT * from coupon_code WHERE coupon_code = %s"""
