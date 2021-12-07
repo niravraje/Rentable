@@ -118,7 +118,7 @@ function SearchBar({ placeholder, data }) {
             autocomplete="off"
             value="Apartment"
             onChange={cateFilter}
-            defaultChecked
+            // defaultChecked
           />
           <label class="btn searchButton" for="option1">
             Apartment

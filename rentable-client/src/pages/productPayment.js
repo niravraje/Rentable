@@ -30,20 +30,21 @@ function Payment(props) {
     };
     axios.post(API.VALIDATE_COUPON, requestOptions).then((response) => {
       console.log("Coupon validation response: " + JSON.stringify(response));
-      if (response.data.discount_percent == 0) {
+      if (response.data.discount_percent === 0) {
         console.log("Invalid coupon");
         setCouponCodeValid(false);
       } else {
         setCouponCodeValid(true);
-        const discountDecimal =
-          parseFloat(response.data.discount_percent) * 0.01;
-        const newDiscountPrice =
-          productCard.rent_price - productCard.rent_price * discountDecimal;
-        setFinalRentPrice(newDiscountPrice);
+        setFinalRentPrice(
+          productCard.rent_price -
+            productCard.rent_price *
+              (parseFloat(response.data.discount_percent) * 0.01)
+        );
         console.log("Price after coupon is applied: " + finalRentPrice);
+
+        sessionStorage.setItem("final_rent_price", finalRentPrice);
       }
     });
-    // setFinalRentPrice();
   };
 
   return (
@@ -91,7 +92,7 @@ function Payment(props) {
               disabled="disable"
             />
           </Form.Group>
-          <Paypal productRentPrice={finalRentPrice} />
+          <Paypal productCard={productCard} />
         </Form>
       </div>
       <div>

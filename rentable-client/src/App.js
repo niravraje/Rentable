@@ -11,23 +11,22 @@ import OwnerSignIn from "./pages/ownerSignIn";
 import OwnerSignUp from "./pages/ownerSignUp";
 import OwnerDashboard from "./pages/ownerDashboard";
 import OwnerAddNewListing from "./pages/ownerAddNewListing";
-import RenterAccount from "./pages/renterAccount";
 import RenterDashboard from "./pages/renterDashboard";
 import ForgotPassword from "./pages/forgotPassword";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminDashboard from "./pages/adminDashboard";
 import AdminRefund from "./pages/adminRefund";
-import AdminMessages from "./pages/adminMessages";
 import ProductDetails from "./pages/productDetails";
 import EnhancedTable from "./pages/adminApproveListings";
 import Payment from "./pages/productPayment";
 import ProductLodgeComplaint from "./pages/productLodgeComplaint";
 import AdminViewComplaints from "./pages/adminComplaints";
 import ProductAddReview from "./pages/productAddReview";
-import ChatApplication from "./pages/dnu_chatApplication";
 import ChatApp from "./pages/chatApp";
 import LandingPage from "./pages/landing";
 import ChatBotPage from "./pages/chatBot";
+import RenterOrderHistory from "./pages/renterOrderHistory";
+import OwnerOrderHistory from "./pages/ownerOrderHistory";
 
 function App() {
   const [loginStatus, setLoginStatus] = useState(
@@ -135,13 +134,6 @@ function App() {
           />
           <ProtectedRoute
             exact
-            path="/renter-account"
-            loginStatus={loginStatus}
-            userType={userType}
-            component={RenterAccount}
-          />
-          <ProtectedRoute
-            exact
             path="/renter-dashboard"
             loginStatus={loginStatus}
             userType={userType}
@@ -195,6 +187,20 @@ function App() {
             exact
             component={ProductAddReview}
           />
+          <Route
+            path="/renter-order-history"
+            exact
+            component={RenterOrderHistory}
+          />
+          <Route path="/renter-messages" exact component={ChatApp} />
+          <Route
+            path="/owner-order-history"
+            exact
+            component={OwnerOrderHistory}
+          />
+
+          <Route path="/owner-messages" exact component={ChatApp} />
+
           {/* <Route path="/chat-app" exact component={ChatApplication} /> */}
           <Route path="/chat-app" exact component={ChatApp} />
         </Switch>

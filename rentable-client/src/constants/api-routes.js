@@ -10,3 +10,5 @@ export const ADMIN_DENY_LISTING = api_server + "/deny_listing";
 export const ADD_NEW_COMPLAINT = api_server + "/add_new_complaint";
 export const ADD_NEW_REVIEW = api_server + "/add_new_review";
 export const VALIDATE_COUPON = api_server + "/validate_coupon";
+export const GET_USER_DETAILS = api_server + "/get_user_details";
+export const ADD_NEW_ORDER = api_server + "/add_new_order";

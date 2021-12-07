@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from flask_jwt_extended import create_access_token, JWTManager
 from flask_cors import CORS
+from datetime import date
 # from flask_socketio import SocketIO, send
 import pymysql
 
@@ -138,13 +139,26 @@ def sign_in():
         return jsonify({'msg': 'Unsupported login type'}), 400
 
 
+@app.route('/get_user_details', methods=['GET', 'POST'])
+def get_user_details():
+    conn.ping(reconnect=True)
+    if request.method == 'POST':
+        username = request.json.get("username")
+        cur = conn.cursor()
+        query_get_user = """SELECT * FROM user WHERE username = %s"""
+        if cur.execute(query_get_user, (username)):
+            result = cur.fetchall()
+            print('result[0]: ', result[0])
+            return jsonify(result[0])
+        else:
+            return jsonify({'msg': 'No matching users found.'}), 404
+
+
 @app.route('/get_products', methods=['GET', 'POST'])
 def get_products():
     conn.ping(reconnect=True)
     if request.method == 'GET':
-        conn.ping(reconnect=True)
         cur = conn.cursor()
-
         query_get_all_products = """SELECT * FROM product"""
         if cur.execute(query_get_all_products):
             result = cur.fetchall()
@@ -302,6 +316,34 @@ def validate_coupon():
             return jsonify({'discount_percent': result[0]['discount_percent']})
         else:
             return jsonify({'discount_percent': 0})
+
+
+@app.route('/add_new_order', methods=['GET', 'POST'])
+def add_new_order():
+    conn.ping(reconnect=True)
+    if request.method == 'POST':
+
+        today = date.today()
+
+        # mm/dd/y
+        d3 = today.strftime("%m/%d/%y")
+
+        order_id = request.json.get('order_id')
+        order_date = d3
+        owner_username = request.json.get('owner_username')
+        renter_username = request.json.get('renter_username')
+        product_title = request.json.get('product_title')
+        product_rent_price = request.json.get('product_rent_price')
+        product_rent_frequency = request.json.get('product_rent_frequency')
+
+        query_insert_order = """INSERT INTO order_history(order_id, order_date, owner_username, renter_username, product_title, product_rent_price, product_rent_frequency) VALUES(%s, %s, %s, %s, %s, %s, %s)"""
+
+        cur = conn.cursor()
+        cur.execute(query_insert_order, (order_id, order_date, owner_username,
+                    renter_username, product_title, product_rent_price, product_rent_frequency))
+        conn.commit()
+
+        return jsonify({'msg': 'Order added successfully', 'order_id': order_id})
 
 
 if __name__ == '__main__':

@@ -74,7 +74,9 @@ a {
 
 .searchButtonGroup {
   margin-top: 50px;
-  margin-right: 195px;
+  margin-right: 245px;
+  /* margin-left: auto;
+  margin-right: auto; */
   display: flex;
 }
 

@@ -29,7 +29,7 @@ const Navbar = (props) => {
 
           {/* <NavLink to="/signup">Sign Up</NavLink> */}
           {props.loginStatus && props.userType == "renter" ? (
-            <NavLink to="/renter-account">My Account</NavLink>
+            <NavLink to="/renter-dashboard">Renter Dashboard</NavLink>
           ) : null}
 
           {props.loginStatus && props.userType == "owner" ? (

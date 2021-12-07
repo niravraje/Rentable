@@ -23,13 +23,13 @@ const OwnerDashboard = () => {
           Add New Listing
         </Link>
         <Link
-          to="/view-owner-orders"
+          to="/owner-order-history"
           className="btn btn-primary w-100 menu-buttons"
         >
           View Orders
         </Link>
         <Link
-          to="/view-owner-messages"
+          to="/owner-messages"
           className="btn btn-primary w-100 menu-buttons"
         >
           View Messages

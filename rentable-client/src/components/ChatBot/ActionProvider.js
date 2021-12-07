@@ -54,7 +54,7 @@ class ActionProvider {
 
   handleHistory = () => {
     const message = this.createChatBotMessage(
-      "Here is a link to view order history, https://localhost:3000/order-history"
+      "Here is a link to view your order history, https://localhost:3000/renter-order-history"
     );
     this.addMessageToState(message);
   };
