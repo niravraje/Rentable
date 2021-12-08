@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import * as API from "../constants/api-routes";
+import Alert from "react-bootstrap/Alert";
 
 function ProductLodgeComplaint(props) {
   const { state } = props.location;
@@ -9,6 +10,7 @@ function ProductLodgeComplaint(props) {
   const [productCard, setProductCard] = useState(state);
   const [isRefundRequested, setIsRefundRequested] = useState(false);
   const [complaintDescription, setComplaintDescription] = useState("");
+  const [isComplaintSubmitted, setIsComplaintSubmitted] = useState(false);
 
   const addNewComplaint = async (e) => {
     e.preventDefault();
@@ -20,9 +22,14 @@ function ProductLodgeComplaint(props) {
     };
     console.log("Request Options: " + JSON.stringify(requestOptions));
 
-    axios.post(API.ADD_NEW_COMPLAINT, requestOptions).then((response) => {
-      console.log("Response: " + JSON.stringify(response));
-    });
+    axios
+      .post(API.ADD_NEW_COMPLAINT, requestOptions)
+      .then((response) => {
+        console.log("Response: " + JSON.stringify(response));
+      })
+      .then(() => {
+        setIsComplaintSubmitted(true);
+      });
   };
 
   return (
@@ -31,6 +38,9 @@ function ProductLodgeComplaint(props) {
       style={{ marginTop: "100px", width: "500px" }}
     >
       <div className="card-body">
+        {isComplaintSubmitted ? (
+          <Alert>Complaint Lodged Successfully</Alert>
+        ) : null}
         <form onSubmit={addNewComplaint}>
           <p className="h4 text-center mb-4">Lodge a Complaint</p>
           <label htmlFor="defaultFormContactNameEx" className="form-label">
@@ -78,10 +88,7 @@ function ProductLodgeComplaint(props) {
             onChange={(e) => setComplaintDescription(e.currentTarget.value)}
           />
           <div className="text-center mt-4">
-            <button
-              type="submit"
-              className="btn btn-dark btn-primary w-49 float: left"
-            >
+            <button type="submit" className="btn btn-primary w-49 float: left">
               Submit
             </button>
           </div>

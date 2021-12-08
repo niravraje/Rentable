@@ -72,14 +72,14 @@
 
 .productDescriptionContainer {
   height: 19rem;
-  font-size: 30px;
+  font-size: 20px;
   padding: 10px;
 }
 
 .locationInfo {
   padding-left: 10px;
   vertical-align: bottom;
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .productMapContainer {
@@ -88,3 +88,9 @@
   justify-content: center;
   background-color: lightgrey;
 }
+
+/* .reviewsContainer {
+  width: 35%;
+  justify-content: center;
+  margin: auto;
+} */

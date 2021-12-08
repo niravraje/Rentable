@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import "../style/productDetails.css";
 import { Button, Rating } from "@mui/material";
@@ -6,6 +6,9 @@ import GpsFixedIcon from "@mui/icons-material/GpsFixed";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import "../style/centralMenu.css";
 import Geocode from "react-geocode";
+import ReviewPage from "../components/Review/ReviewPage";
+import axios from "axios";
+import * as API from "../constants/api-routes";
 
 const ProductDetails = (props) => {
   // const location = useLocation();
@@ -14,18 +17,38 @@ const ProductDetails = (props) => {
 
   console.log("Product ID: " + card.id + " was clicked.");
   console.log("Card: " + card);
+  const [reviews, setReviews] = useState([
+    {
+      review_id: "1",
+      renter_username: "",
+      review_description: " ",
+      rating_value: 0,
+    },
+  ]);
+  useEffect(() => {
+    const requestOptions = {
+      product_id: card.id,
+    };
 
-  const [center, setCenter] = useState({ lat: 48.1467112, lng: 17.1385319 });
+    axios.post(API.GET_PRODUCT_REVIEWS, requestOptions).then((response) => {
+      console.log(
+        "Response of GET_PRODUCT_REVIEWS: " + JSON.stringify(response)
+      );
+      setReviews(response.data);
+    });
+  }, []);
+
+  const [center, setCenter] = useState({ lat: 39.167908, lng: -86.51898 });
 
   const mapContainerStyle = {
     width: "100vw",
     height: "51vh",
   };
-
   Geocode.setApiKey("AIzaSyA-25Etr0SANix262qUzNfh7BUUezmfVxc");
   Geocode.fromAddress(card.product_location).then(
     (response) => {
-      setCenter(response.results[0].geometry.product_location);
+      const { lat, lng } = response.results[0].geometry.location;
+      console.log(lat, lng);
     },
     (error) => {
       console.error(error);
@@ -41,15 +64,18 @@ const ProductDetails = (props) => {
             src={card.image_url}
             alt="Product image"
           />
-          <div className="productImagePriceOverlay"> {card.rent_price} </div>
+          <div className="productImagePriceOverlay">
+            {" "}
+            ${card.rent_price} / {card.rent_frequency}{" "}
+          </div>
         </div>
         <div className="productInfoBox">
           <div className="productTitleBackground">
-            <h2 className="productTitle"> {card.title} </h2>
+            <h4 className="productTitle"> {card.title} </h4>
             <Rating
               name="rating"
               className="productRating"
-              value={card.rating}
+              value={4.5}
               precision={0.5}
               readOnly
             />
@@ -99,6 +125,14 @@ const ProductDetails = (props) => {
             </Link>
             <Link
               to={{
+                pathname: "/renter-messages",
+              }}
+              className="btn btn-primary w-100 menu-buttons"
+            >
+              Chat with the Owner
+            </Link>
+            <Link
+              to={{
                 pathname: "/product-add-review",
                 state: card,
               }}
@@ -120,6 +154,19 @@ const ProductDetails = (props) => {
         </div>
       </div>
       <div className="productDivider"></div>
+      <div
+        className="card container mt-S"
+        style={{ marginTop: "50px", width: "500px", marginBottom: "50px" }}
+      >
+        <div className="card-body">
+          <center>
+            <h3 className="card-title">Customer Reviews</h3>
+          </center>
+          <div className="reviewsContainer">
+            <ReviewPage reviews={reviews} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

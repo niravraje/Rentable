@@ -13,19 +13,25 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-
-function createData(email, id, refund, reason) {
-  return {
-    email,
-    id,
-    refund,
-    reason,
-  };
-}
+import Button from "@mui/material/Button";
+import axios from "axios";
+import * as API from "../constants/api-routes";
+import { useState, useEffect } from "react";
 
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
+
+  const updateRefundStatus = (complaint_id) => {
+    const requestOptions = {
+      complaint_id: complaint_id,
+    };
+    axios.post(API.UPDATE_REFUND_STATUS, requestOptions).then((response) => {
+      console.log(
+        "Response of UPDATE_REFUND_STATUS: " + JSON.stringify(response)
+      );
+    });
+  };
 
   return (
     <React.Fragment>
@@ -39,11 +45,22 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
-          {row.email}
+        <TableCell component="th" scope="row" align="center">
+          {row.complaint_id}
         </TableCell>
-        <TableCell align="right">{row.id}</TableCell>
-        <TableCell align="right">{row.refund}</TableCell>
+        <TableCell align="center">{row.renter_username}</TableCell>
+        <TableCell align="center">{row.product_id}</TableCell>
+        <TableCell align="center">
+          {row.refund_status == 1 ? "Complete" : "Pending"}
+        </TableCell>
+        <TableCell align="center">
+          <Button
+            variant="contained"
+            onClick={() => updateRefundStatus(row.complaint_id)}
+          >
+            Issue Refund
+          </Button>
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -54,7 +71,7 @@ function Row(props) {
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableBody>
-                  <TableCell align="left">{row.reason}</TableCell>
+                  <TableCell align="left">{row.description}</TableCell>
                 </TableBody>
               </Table>
             </Box>
@@ -65,37 +82,38 @@ function Row(props) {
   );
 }
 
-Row.propTypes = {
-  row: PropTypes.shape({
-    email: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    refund: PropTypes.string.isRequired,
-    history: PropTypes.arrayOf(
-      PropTypes.shape({
-        reason: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-  }).isRequired,
-};
-
-const rows = [
-  createData("user1@gmail.com", 2, "yes", "Information not match"),
-  createData("user2@gmail.com", 4, "yes", "Owner is not nice"),
-  createData(
-    "user3@gmail.com",
-    6,
-    "yes",
-    "The apartment I rented was very dirty when I first arrived."
-  ),
-  createData(
-    "user4@gmail.com",
-    7,
-    "yes",
-    "The car we rented had multiple issues, the seats were very dirty and had multiple stains on the, the engine was making a loud rattling noise, and the check tire pressure light was on."
-  ),
-];
+// Row.propTypes = {
+//   row: PropTypes.shape({
+//     email: PropTypes.string.isRequired,
+//     id: PropTypes.number.isRequired,
+//     refund: PropTypes.string.isRequired,
+//     history: PropTypes.arrayOf(
+//       PropTypes.shape({
+//         reason: PropTypes.string.isRequired,
+//       })
+//     ).isRequired,
+//   }).isRequired,
+// };
 
 export default function AdminViewComplaints() {
+  const [rows, setRows] = useState([
+    {
+      complaint_id: "",
+      description: "",
+      is_refund_requested: "",
+      product_id: "",
+      refund_status: "",
+      renter_username: "",
+    },
+  ]);
+
+  useEffect(() => {
+    axios.post(API.GET_COMPLAINTS).then((response) => {
+      console.log("Response of GET_COMPLAINTS: " + JSON.stringify(response));
+      setRows(response.data);
+    });
+  }, []);
+
   return (
     <div
       style={{ padding: "100px", paddingLeft: "200px", paddingRight: "200px" }}
@@ -105,14 +123,19 @@ export default function AdminViewComplaints() {
           <TableHead>
             <TableRow>
               <TableCell />
-              <TableCell>Email</TableCell>
-              <TableCell align="right">Rental ID</TableCell>
-              <TableCell align="right">Refund Status</TableCell>
+              <TableCell align="center">Complaint ID</TableCell>
+              <TableCell align="center">Renter Username</TableCell>
+              <TableCell align="center">Product ID</TableCell>
+              <TableCell align="center">Refund Status</TableCell>
+              <TableCell align="center">Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((row) => (
-              <Row key={row.refund} row={row} />
+              <Row
+                key={row.refund_status == 1 ? "Complete" : "Pending"}
+                row={row}
+              />
             ))}
           </TableBody>
         </Table>

@@ -177,6 +177,7 @@ function App() {
             exact
             component={AdminViewComplaints}
           />
+          <Route path="/admin-messages" exact component={ChatApp} />
           <Route
             path="/product-lodge-complaint"
             exact

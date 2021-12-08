@@ -346,6 +346,72 @@ def add_new_order():
         return jsonify({'msg': 'Order added successfully', 'order_id': order_id})
 
 
+@app.route('/get_order_history', methods=['GET', 'POST'])
+def get_order_history():
+    conn.ping(reconnect=True)
+    if request.method == 'POST':
+        user_type = request.json.get("user_type")
+        username = request.json.get("username")
+        cur = conn.cursor()
+        if user_type == 'renter':
+            query_get_order_history = """SELECT * FROM order_history WHERE renter_username = %s"""
+        else:
+            query_get_order_history = """SELECT * FROM order_history WHERE owner_username = %s"""
+
+        if cur.execute(query_get_order_history, (username)):
+            result = cur.fetchall()
+            print('result: ', result)
+            return jsonify(result)
+        else:
+            return jsonify({'msg': 'No order history found for the user.'}), 404
+
+
+@app.route('/get_product_reviews', methods=['GET', 'POST'])
+def get_product_reviews():
+    conn.ping(reconnect=True)
+    if request.method == 'POST':
+        product_id = request.json.get("product_id")
+        cur = conn.cursor()
+        query_get_product_reviews = """SELECT * FROM product_review WHERE product_id = %s"""
+
+        if cur.execute(query_get_product_reviews, (product_id)):
+            result = cur.fetchall()
+            print('result: ', result)
+            return jsonify(result)
+        else:
+            return jsonify({'msg': 'No customer reviews found for this product.'}), 404
+
+
+@app.route('/get_complaints', methods=['GET', 'POST'])
+def get_complaints():
+    conn.ping(reconnect=True)
+    if request.method == 'POST':
+        cur = conn.cursor()
+        query_get_complaints = """SELECT * FROM complaint"""
+
+        if cur.execute(query_get_complaints):
+            result = cur.fetchall()
+            print('result: ', result)
+            return jsonify(result)
+        else:
+            return jsonify({'msg': 'No complaints found'}), 404
+
+
+@app.route('/update_refund_status', methods=['GET', 'POST'])
+def update_refund_status():
+    conn.ping(reconnect=True)
+    if request.method == 'POST':
+        complaint_id = request.json.get("complaint_id")
+        cur = conn.cursor()
+        query_update_refund_status = """UPDATE complaint SET refund_status = 1 WHERE complaint_id = %s"""
+
+        if cur.execute(query_update_refund_status, (complaint_id)):
+            conn.commit()
+            return jsonify({'msg': 'Refund issued successfully.', 'Complaint ID': complaint_id})
+        else:
+            return jsonify({'msg': 'Invalid Complaint ID.'}), 404
+
+
 if __name__ == '__main__':
     app.run(debug=True)
     # socketio.run(app, debug=True)

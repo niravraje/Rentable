@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Rating from "../components/Rating/Rating";
 import axios from "axios";
 import * as API from "../constants/api-routes";
+import Alert from "react-bootstrap/Alert";
 
 const ProductAddReview = (props) => {
   const { state } = props.location;
@@ -10,6 +11,7 @@ const ProductAddReview = (props) => {
 
   const [ratingValue, setRatingValue] = useState(0);
   const [reviewDescription, setReviewDescription] = useState("");
+  const [isReviewSubmitted, setIsReviewSubmitted] = useState(false);
 
   const handleRating = (ratingValue) => {
     setRatingValue(ratingValue);
@@ -24,9 +26,14 @@ const ProductAddReview = (props) => {
     };
     console.log("Request Options: " + JSON.stringify(requestOptions));
 
-    axios.post(API.ADD_NEW_REVIEW, requestOptions).then((response) => {
-      console.log("Response: " + JSON.stringify(response));
-    });
+    axios
+      .post(API.ADD_NEW_REVIEW, requestOptions)
+      .then((response) => {
+        console.log("Response: " + JSON.stringify(response));
+      })
+      .then(() => {
+        setIsReviewSubmitted(true);
+      });
   };
 
   return (
@@ -35,6 +42,10 @@ const ProductAddReview = (props) => {
       style={{ marginTop: "100px", width: "500px" }}
     >
       <div className="card-body">
+        {isReviewSubmitted ? (
+          <Alert>Review Submitted Successfully</Alert>
+        ) : null}
+
         <form onSubmit={addNewReview}>
           <p className="h4 text-center mb-4">Write a Customer Review</p>
           <label htmlFor="defaultFormContactNameEx" className="form-label">

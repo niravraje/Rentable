@@ -12,3 +12,7 @@ export const ADD_NEW_REVIEW = api_server + "/add_new_review";
 export const VALIDATE_COUPON = api_server + "/validate_coupon";
 export const GET_USER_DETAILS = api_server + "/get_user_details";
 export const ADD_NEW_ORDER = api_server + "/add_new_order";
+export const GET_ORDER_HISTORY = api_server + "/get_order_history";
+export const GET_PRODUCT_REVIEWS = api_server + "/get_product_reviews";
+export const GET_COMPLAINTS = api_server + "/get_complaints";
+export const UPDATE_REFUND_STATUS = api_server + "/update_refund_status";

@@ -1,3 +1,5 @@
+import { LaptopWindowsTwoTone } from "@material-ui/icons";
+
 // ActionProvider starter code
 class ActionProvider {
   constructor(createChatBotMessage, setStateFunc) {
@@ -17,7 +19,7 @@ class ActionProvider {
 
   handleCar = () => {
     const message = this.createChatBotMessage(
-      "Here is information about rental cars ",
+      "Rentable offers a variety of cars for you to rent. These listings are uploaded by our partners. \n To view car listings, please go to https://rentable1.herokuapp.com and click on the Cars tab.",
       {
         widget: "car",
       }
@@ -27,7 +29,7 @@ class ActionProvider {
 
   handleApartment = () => {
     const message = this.createChatBotMessage(
-      "Here is information about rental apartments ",
+      "Rentable offers a variety of apartments for you to rent. These listings are uploaded by our partners. \n To view apartment listings, please go to https://rentable1.herokuapp.com and click on the Apartments tab.",
       {
         widget: "apartment",
       }
@@ -37,7 +39,7 @@ class ActionProvider {
 
   handleService = () => {
     const message = this.createChatBotMessage(
-      "Here is information about services ",
+      "Rentable allows you to book a service such as carpet cleaning, vacuuming, car repair, etc. provided by any of our partners. To view listings of services, please go to https://rentable1.herokuapp.com and click on the Services tab.",
       {
         widget: "service",
       }
@@ -47,14 +49,14 @@ class ActionProvider {
 
   handleContact = () => {
     const message = this.createChatBotMessage(
-      "Here is a link to the rentable team, https://localhost:3000/contact-us"
+      "Here is a link to contact the Rentable Support Team:\n https://rentable1.herokuapp.com/contact-us"
     );
     this.addMessageToState(message);
   };
 
   handleHistory = () => {
     const message = this.createChatBotMessage(
-      "Here is a link to view your order history, https://localhost:3000/renter-order-history"
+      "Here is a link to view your order history:\n https://rentable1.herokuapp.com/renter-order-history"
     );
     this.addMessageToState(message);
   };
