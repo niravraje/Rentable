@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as API from "../constants/api-routes";
 import { FaBorderNone } from "react-icons/fa";
+import Alert from "react-bootstrap/Alert";
 
 const OwnerSignUp = (props) => {
   const [email, setEmail] = useState("");
@@ -73,9 +74,7 @@ const OwnerSignUp = (props) => {
       {props.loginStatus ? (
         <>
           {console.log({ firstName })}
-          <div className="mb-3" style={{ border: FaBorderNone }}>
-            <h1>User Registered Successfully</h1>
-          </div>
+          <Alert>User Registered Successfully</Alert>
         </>
       ) : (
         <div className="card-body">

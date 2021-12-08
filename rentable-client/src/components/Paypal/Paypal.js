@@ -11,10 +11,10 @@ export default function Paypal(props) {
   //default value of toSend state
   const [toSend, setToSend] = useState({
     from_name: sessionStorage.getItem("username"),
-    owner_email: "niravraje3@gmail.com",
+    owner_email: "rentableteam@gmail.com",
     price: sessionStorage.getItem("final_rent_price"),
     message: "",
-    reply_to: "fullhartadam@gmail.com",
+    reply_to: "niravraje3@gmail.com",
   });
   sessionStorage.setItem("toSendDetails", toSend);
 

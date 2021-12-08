@@ -39,7 +39,7 @@ const Card = ({ card }) => {
         <h2 className="title"> {card.title} </h2>
         <p className="description">
           {card.description}
-          <br />${card.rent_price}
+          <br />${card.rent_price} / {card.rent_frequency}
           <br />4 stars
           <br />
           {card.product_location}

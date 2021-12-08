@@ -50,25 +50,53 @@ function ForgotPassword() {
     setToSend({ ...toSend, [e.target.name]: e.target.value });
   };
   return (
-    <form onSubmit={onSubmit}>
-      <div
-        className="card container mt-S"
-        style={{ marginTop: "100px", width: "500px", border: FaBorderNone }}
-      >
-        <h2 style={{ alignItems: "center" }}>
-          {" "}
-          Enter your email to reset your password.{" "}
-        </h2>
-        <input
-          type="text"
-          name="reply_to"
-          placeholder="Your email"
-          value={toSend.reply_to}
-          onChange={handleChange}
-        />
-        <button type="submit">Submit</button>
+    <div
+      className="card container mt-S"
+      style={{ marginTop: "100px", width: "500px" }}
+    >
+      <div className="card-body">
+        <h5 className="card-title">Enter your email to reset your password.</h5>
+        <form onSubmit={onSubmit}>
+          <div className="mb-3">
+            <label htmlFor="Inputemail" className="form-label">
+              Email
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              name="reply_to"
+              placeholder="Enter your email"
+              value={toSend.reply_to}
+              onChange={handleChange}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary w-100">
+            Submit
+          </button>
+        </form>
       </div>
-    </form>
+    </div>
+    // <form onSubmit={onSubmit}>
+    //   <div
+    //     className="card container mt-S"
+    //     style={{ marginTop: "100px", width: "500px", border: FaBorderNone }}
+    //   >
+    //     <h2 style={{ alignItems: "center" }}>
+    //       {" "}
+    //       Enter your email to reset your password.{" "}
+    //     </h2>
+    //     <input
+    //       type="text"
+    //       name="reply_to"
+    //       placeholder="Your email"
+    //       value={toSend.reply_to}
+    //       onChange={handleChange}
+    //     />
+    // <button type="submit" className="btn btn-dark btn-primary w-100">
+    //   Submit
+    // </button>
+    //   </div>
+    // </form>
   );
 }
 
