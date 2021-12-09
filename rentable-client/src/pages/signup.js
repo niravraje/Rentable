@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaBorderNone } from "react-icons/fa";
 import * as API from "../constants/api-routes";
+import { Alert } from "@mui/material";
 
 // const case1 = ({username,password,confirmPassword,email}) =>{
 //     return new Promise((resolve, reject) =>{
@@ -34,6 +35,7 @@ const Signup = (props) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [address, setAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   // const [isLogin, setIsLogin] = useState(false);
 
@@ -53,6 +55,7 @@ const Signup = (props) => {
         first_name: firstName,
         last_name: lastName,
         password: password,
+        address: address,
       }),
     };
     try {
@@ -131,8 +134,9 @@ const Signup = (props) => {
       {props.loginStatus ? (
         <>
           {console.log({ firstName })}
-          <div className="mb-3" style={{ border: FaBorderNone }}>
-            <h1>User Registered Successfully</h1>
+          <div style={{ padding: "20px" }}>
+            {console.log({ firstName })}
+            <Alert>User Registered Successfully</Alert>
           </div>
         </>
       ) : (
@@ -168,6 +172,19 @@ const Signup = (props) => {
                 aria-describedby="emailHelp"
                 value={lastName}
                 onChange={(e) => setLastName(e.currentTarget.value)}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="InputLastName" className="form-label">
+                Address
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="InputAddress"
+                aria-describedby="emailHelp"
+                value={address}
+                onChange={(e) => setAddress(e.currentTarget.value)}
               />
             </div>
             <div className="mb-3">

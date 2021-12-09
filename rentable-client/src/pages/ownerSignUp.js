@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as API from "../constants/api-routes";
 import { FaBorderNone } from "react-icons/fa";
-import Alert from "react-bootstrap/Alert";
+import { Alert } from "@mui/material";
 
 const OwnerSignUp = (props) => {
   const [email, setEmail] = useState("");
@@ -10,6 +10,7 @@ const OwnerSignUp = (props) => {
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [address, setAddress] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,6 +31,7 @@ const OwnerSignUp = (props) => {
         first_name: firstName,
         last_name: lastName,
         password: password,
+        address: address,
       }),
     };
     try {
@@ -72,10 +74,10 @@ const OwnerSignUp = (props) => {
       style={{ marginTop: "100px", width: "500px", border: FaBorderNone }}
     >
       {props.loginStatus ? (
-        <>
+        <div style={{ padding: "20px" }}>
           {console.log({ firstName })}
           <Alert>User Registered Successfully</Alert>
-        </>
+        </div>
       ) : (
         <div className="card-body">
           <h1 className="card-title"></h1>
@@ -109,6 +111,19 @@ const OwnerSignUp = (props) => {
                 aria-describedby="emailHelp"
                 value={lastName}
                 onChange={(e) => setLastName(e.currentTarget.value)}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="InputLastName" className="form-label">
+                Address
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="InputAddress"
+                aria-describedby="emailHelp"
+                value={address}
+                onChange={(e) => setAddress(e.currentTarget.value)}
               />
             </div>
             <div className="mb-3">

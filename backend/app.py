@@ -55,6 +55,7 @@ def register():
         first_name = request.json.get('first_name')
         last_name = request.json.get('last_name')
         password = request.json['password']
+        address = request.json['address']
 
         # Generate password hash
         password = generate_password_hash(password, method='sha256')
@@ -84,10 +85,10 @@ def register():
         # Insert into user table
         cur = conn.cursor()
         query_insert_user = """INSERT INTO
-        user(username, user_type, first_name, last_name, email)
-        VALUES(%s, %s, %s, %s, %s)"""
+        user(username, user_type, first_name, last_name, email, address)
+        VALUES(%s, %s, %s, %s, %s, %s)"""
         cur.execute(query_insert_user, (username, user_type,
-                    first_name, last_name, email))
+                    first_name, last_name, email, address))
         conn.commit()
 
         access_token = create_access_token(identity=email)
