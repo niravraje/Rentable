@@ -14,7 +14,7 @@ export default function Paypal(props) {
     owner_email: "rentableteam@gmail.com",
     price: sessionStorage.getItem("final_rent_price"),
     message: "",
-    reply_to: "niravraje3.com",
+    reply_to: "niravraje3@gmail.com",
     // fullhartadam@gmail.com
   });
   sessionStorage.setItem("toSendDetails", toSend);
@@ -77,7 +77,7 @@ export default function Paypal(props) {
             owner_username: props.productCard.owner_username,
             renter_username: sessionStorage.getItem("username"),
             product_title: props.productCard.title,
-            product_rent_price: props.productCard.rent_price,
+            product_rent_price: sessionStorage.getItem("final_rent_price"),
             product_rent_frequency: props.productCard.rent_frequency,
           };
           axios.post(API.ADD_NEW_ORDER, requestOptions).then((response) => {

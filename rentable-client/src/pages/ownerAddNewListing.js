@@ -26,42 +26,6 @@ const OwnerAddNewListing = () => {
     console.log("User type: " + userTypeLocal);
     console.log(imageSelected);
 
-    // try {
-    //   const requestOptions = {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({
-    //       category: category,
-    //       title: title,
-    //       description: description,
-    //       rent_price: rentPrice,
-    //       rent_frequency: rentFrequency,
-    //       owner_username: sessionStorage.getItem("username"),
-    //     }),
-    //   };
-
-    //   console.log(requestOptions);
-    //   const res = await fetch(API.ADD_NEW_LISTING, requestOptions);
-    //   console.log("Response on add_new_listing request: " + res);
-    //   const data = await res.json();
-
-    //   setProductId(data["product_id"]);
-    //   console.log("Product id: " + productId);
-
-    //   console.log("Status code of request: " + res.status);
-    //   console.log("res.json(): " + JSON.stringify(data));
-
-    //   if (res.status !== 200) {
-    //     setError("Error: Could not create the new listing.");
-    //     return;
-    //   }
-    //   setError("");
-    //   console.log("Listing added successfully.");
-    // } catch (err) {
-    //   setError("Error. Internal server error.");
-    //   console.log("Server error occurred. Check if the server is running.");
-    // }
-
     // Request for Uploading Image
     const dataArray = new FormData();
     dataArray.append("file", imageSelected);

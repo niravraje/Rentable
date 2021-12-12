@@ -28,6 +28,7 @@ jwt = JWTManager(app)
 
 
 def get_unique_id(table_name):
+    conn.ping(reconnect=True)
     cur = conn.cursor()
     query = "SELECT count(*) AS row_count FROM " + str(table_name)
     if cur.execute(query):
