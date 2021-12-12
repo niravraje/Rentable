@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import * as API from "../constants/api-routes";
 import { FaBorderNone } from "react-icons/fa";
 import { Alert } from "@mui/material";
+import MyCaptcha from "../components/Captcha";
 
 const OwnerSignUp = (props) => {
   const [email, setEmail] = useState("");
@@ -13,9 +14,22 @@ const OwnerSignUp = (props) => {
   const [address, setAddress] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [captchaText, setCaptchaText] = useState("");
+  const [captchaActual, setCaptchaActual] = useState(null);
+  const handleCaptchaActual = (dataKey) => {
+    setCaptchaActual(dataKey);
+  };
 
   const registerUser = async (e) => {
     e.preventDefault();
+
+    console.log("captchaActual: " + captchaActual);
+    console.log("captchaEntered: " + captchaText);
+    if (captchaActual !== captchaText) {
+      setError("Incorrect Captcha value entered. Please try again.");
+      return;
+    }
+
     setIsLoading(true);
 
     props.handleUserType("owner");
@@ -160,6 +174,22 @@ const OwnerSignUp = (props) => {
                 id="InputPassword2"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.currentTarget.value)}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="inputCaptcha" className="form-label">
+                Captcha Test
+              </label>
+              <MyCaptcha handleCaptchaActual={handleCaptchaActual} />
+              <br></br>
+              <label htmlFor="inputCaptcha" className="form-label">
+                Enter the characters seen in the above image
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                value={captchaText}
+                onChange={(e) => setCaptchaText(e.currentTarget.value)}
               />
             </div>
 

@@ -1,26 +1,7 @@
-// import React from 'react'
-
-// const forgotPassword = () => {
-//     return (
-//         <div style={
-//             {
-//                 display: 'inline',
-//                 justifyContent:'center',
-//                 alignItems: 'center',
-//                 height: '90vh'
-//             }}>
-//             <h2 align="center" margin-top= '500px'>Forgot Password</h2>
-//             <h3 align="center" margin-top= "500px">Enter your email address to reset your password</h3>
-//         </div>
-
-//     )
-// }
-
-// export default forgotPassword
-
 import { useState } from "react";
 import { send } from "emailjs-com";
 import { FaAlignCenter, FaBorderNone } from "react-icons/fa";
+import MyCaptcha from "../components/Captcha";
 
 function ForgotPassword() {
   const [toSend, setToSend] = useState({
@@ -29,9 +10,22 @@ function ForgotPassword() {
     message: "",
     reply_to: "",
   });
+  const [captchaText, setCaptchaText] = useState("");
+  const [captchaActual, setCaptchaActual] = useState(null);
+  const handleCaptchaActual = (dataKey) => {
+    setCaptchaActual(dataKey);
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
+
+    console.log("captchaActual: " + captchaActual);
+    console.log("captchaEntered: " + captchaText);
+    if (captchaActual !== captchaText) {
+      setError("Incorrect Captcha value entered. Please try again.");
+      return;
+    }
+
     send(
       "service_740uhkk",
       "template_31bgt4c",
@@ -56,6 +50,11 @@ function ForgotPassword() {
     >
       <div className="card-body">
         <h5 className="card-title">Enter your email to reset your password.</h5>
+        {error && (
+          <p className="text-danger" style={{ fontsize: "100px" }}>
+            {error}
+          </p>
+        )}
         <form onSubmit={onSubmit}>
           <div className="mb-3">
             <label htmlFor="Inputemail" className="form-label">
@@ -68,6 +67,22 @@ function ForgotPassword() {
               placeholder="Enter your email"
               value={toSend.reply_to}
               onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="inputCaptcha" className="form-label">
+              Captcha Test
+            </label>
+            <MyCaptcha handleCaptchaActual={handleCaptchaActual} />
+            <br></br>
+            <label htmlFor="inputCaptcha" className="form-label">
+              Enter the characters seen in the above image
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              value={captchaText}
+              onChange={(e) => setCaptchaText(e.currentTarget.value)}
             />
           </div>
           <button type="submit" className="btn btn-primary w-100">

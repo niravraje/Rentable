@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaBorderNone } from "react-icons/fa";
 import * as API from "../constants/api-routes";
 import { Alert } from "@mui/material";
+import MyCaptcha from "../components/Captcha";
 
 // const case1 = ({username,password,confirmPassword,email}) =>{
 //     return new Promise((resolve, reject) =>{
@@ -37,10 +38,22 @@ const Signup = (props) => {
   const [error, setError] = useState("");
   const [address, setAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  // const [isLogin, setIsLogin] = useState(false);
+  const [captchaText, setCaptchaText] = useState("");
+  const [captchaActual, setCaptchaActual] = useState(null);
+  const handleCaptchaActual = (dataKey) => {
+    setCaptchaActual(dataKey);
+  };
 
   const registerUser = async (e) => {
     e.preventDefault();
+
+    console.log("captchaActual: " + captchaActual);
+    console.log("captchaEntered: " + captchaText);
+    if (captchaActual !== captchaText) {
+      setError("Incorrect Captcha value entered. Please try again.");
+      return;
+    }
+
     setIsLoading(true);
     props.handleUserType("renter");
     console.log("User type: " + props.userType);
@@ -100,31 +113,6 @@ const Signup = (props) => {
       // reject()
     }
   };
-
-  //   const handleSubmit = async (e) => {
-  //     e.preventDefault();
-  //     setIsLoading(true);
-  //     try {
-  //       await registerUser({ username, password, confirmPassword, email });
-  //       setUsername(username);
-  //       setPassword(password);
-  //       setEmail(email);
-  //       setError("");
-  //       setIsLoading(false);
-  //       setIsLogin(true);
-  //       console.log("success");
-  //     } catch (error) {
-  //       setUsername("");
-  //       setPassword("");
-  //       setConfirmPassword("");
-  //       setEmail("");
-  //       setError(
-  //         "Passwords do not match or your password is less than 9 characters."
-  //       );
-  //       setIsLoading(false);
-  //       console.log("failure");
-  //     }
-  //   };
 
   return (
     <div
@@ -221,6 +209,22 @@ const Signup = (props) => {
                 id="InputPassword2"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.currentTarget.value)}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="inputCaptcha" className="form-label">
+                Captcha Test
+              </label>
+              <MyCaptcha handleCaptchaActual={handleCaptchaActual} />
+              <br></br>
+              <label htmlFor="inputCaptcha" className="form-label">
+                Enter the characters seen in the above image
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                value={captchaText}
+                onChange={(e) => setCaptchaText(e.currentTarget.value)}
               />
             </div>
 
