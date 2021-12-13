@@ -12,6 +12,8 @@ function ForgotPassword() {
   });
   const [captchaText, setCaptchaText] = useState("");
   const [captchaActual, setCaptchaActual] = useState(null);
+  const [error, setError] = useState("");
+
   const handleCaptchaActual = (dataKey) => {
     setCaptchaActual(dataKey);
   };

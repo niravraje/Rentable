@@ -14,7 +14,7 @@ export default function Paypal(props) {
     owner_email: "rentableteam@gmail.com",
     price: sessionStorage.getItem("final_rent_price"),
     message: "",
-    reply_to: "niravraje3.com",
+    reply_to: "niravraje3@gmail.com",
     // fullhartadam@gmail.com
   });
   sessionStorage.setItem("toSendDetails", toSend);
