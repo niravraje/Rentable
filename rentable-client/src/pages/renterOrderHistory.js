@@ -179,7 +179,9 @@ export default function RenterOrderHistory() {
       console.log(
         "Response of Get Renter Order History: " + JSON.stringify(response)
       );
-      setRows(response.data.sort((a, b) => (a.order_date < b.order_date ? -1 : 1));
+      setRows(
+        response.data.sort((a, b) => (a.order_date < b.order_date ? -1 : 1))
+      );
     });
   }, []);
 
